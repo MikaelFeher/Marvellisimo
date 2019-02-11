@@ -3,12 +3,15 @@ package com.androidcourse.marvellisimo
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import com.androidcourse.marvellisimo.adapters.CharacterAdapter
 import com.androidcourse.marvellisimo.retrofit.MarvelService
 import com.androidcourse.marvellisimo.retrofit.MarvelServiceHandler
 
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +26,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         MarvelServiceHandler.getAllCharacters()
+
+        character_list.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = CharacterAdapter()
+        }
 
     }
 

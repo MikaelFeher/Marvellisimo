@@ -1,7 +1,6 @@
 package com.androidcourse.marvellisimo.retrofit
 
 import android.annotation.SuppressLint
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -33,6 +32,6 @@ object MarvelServiceHandler {
         service.getAllCharacters(API_KEY, "1", HASH)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { wrapper -> println("I got a Character ${wrapper.data.results.get(0).name}") }
+            .subscribe { wrapper -> wrapper.data.results.toList()}
     }
 }
