@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
 import com.androidcourse.marvellisimo.retrofit.MarvelService
+import com.androidcourse.marvellisimo.retrofit.MarvelServiceHandler
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -16,15 +17,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val marvelService = MarvelService()
-
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
 
-        marvelService.getAllCharacters()
-            .subscribe { wrapper -> println("I got a CharacterDataWrapper $wrapper") }
+        MarvelServiceHandler.getAllCharacters()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
