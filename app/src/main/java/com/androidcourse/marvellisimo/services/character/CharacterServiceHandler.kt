@@ -1,6 +1,7 @@
 package com.androidcourse.marvellisimo.services.character
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.androidcourse.marvellisimo.adapters.CharacterAdapter
@@ -34,7 +35,8 @@ object CharacterServiceHandler {
         .create(CharacterService::class.java)
 
     @SuppressLint("CheckResult")
-    fun getAllCharacters(character_list : RecyclerView) {
+    fun getAllCharacters(character_list : RecyclerView, context: Context) {
+
         SERVICE.getAllCharacters(
             API_KEY, "1",
             HASH
@@ -42,7 +44,8 @@ object CharacterServiceHandler {
             override fun onResponse(call: Call<CharacterDataWrapper>, response: Response<CharacterDataWrapper>) {
                 showData(
                     response.body()!!.data.results,
-                    character_list
+                    character_list,
+                    context
                 )
             }
             override fun onFailure(call: Call<CharacterDataWrapper>, t: Throwable) {
@@ -51,10 +54,10 @@ object CharacterServiceHandler {
         })
     }
 
-    private fun showData(results: List<Character>, character_list: RecyclerView) {
+    private fun showData(results: List<Character>, character_list: RecyclerView, context: Context) {
         character_list.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = CharacterAdapter(results)
+            adapter = CharacterAdapter(results, context)
         }
     }
 }
