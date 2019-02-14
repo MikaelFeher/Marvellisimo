@@ -23,10 +23,10 @@ object CharacterServiceHandler {
 
     //http://gateway.marvel.com/v1/public/characters?ts=1&apikey=b81ab5acd75812bc101c025548dffbdb&hash=31e691f1a0196f2e7d372b067f1ce131
 
-    val okHttpClient = OkHttpClient.Builder()
+    private val okHttpClient = OkHttpClient.Builder()
         .build()
 
-    val SERVICE: CharacterService = Retrofit.Builder()
+    private val SERVICE: CharacterService = Retrofit.Builder()
         .baseUrl("http://gateway.marvel.com/v1/public/")
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -34,9 +34,9 @@ object CharacterServiceHandler {
         .build()
         .create(CharacterService::class.java)
 
+    // Get all characters...
     @SuppressLint("CheckResult")
     fun getAllCharacters(character_list : RecyclerView, context: Context) {
-
         SERVICE.getAllCharacters(
             API_KEY, "1",
             HASH
@@ -47,6 +47,23 @@ object CharacterServiceHandler {
                     character_list,
                     context
                 )
+            }
+            override fun onFailure(call: Call<CharacterDataWrapper>, t: Throwable) {
+                t.message
+            }
+        })
+    }
+
+    // Get single character...
+    fun getCharacterById(id: Int) {
+        SERVICE.getCharacterById(
+            id,
+            API_KEY,
+            "1",
+            HASH
+        ).enqueue(object : Callback<CharacterDataWrapper> {
+            override fun onResponse(call: Call<CharacterDataWrapper>, response: Response<CharacterDataWrapper>) {
+                println(response.body()!!.data.results[0])
             }
             override fun onFailure(call: Call<CharacterDataWrapper>, t: Throwable) {
                 t.message

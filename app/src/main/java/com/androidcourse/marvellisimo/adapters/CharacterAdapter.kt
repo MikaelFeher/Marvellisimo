@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.androidcourse.marvellisimo.helpers.CustomItemClickListener
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.models.Character
+import com.androidcourse.marvellisimo.services.character.CharacterServiceHandler
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.character_list_item.view.*
 
@@ -37,6 +38,7 @@ class CharacterAdapter(private val charactersList: List<Character>, context: Con
         holder.setOnCustomItemClickListener(object : CustomItemClickListener {
             override fun onCustomClickListener(view: View, pos: Int) {
                 Toast.makeText(mContext, "Character id: ${character.id}", Toast.LENGTH_LONG).show()
+                CharacterServiceHandler.getCharacterById(character.id)
             }
         })
     }
