@@ -1,17 +1,14 @@
 package com.androidcourse.marvellisimo
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
-import com.androidcourse.marvellisimo.adapters.CharacterAdapter
-import com.androidcourse.marvellisimo.retrofit.MarvelService
-import com.androidcourse.marvellisimo.retrofit.MarvelServiceHandler
-
+import android.view.View
+import com.androidcourse.marvellisimo.activities.CharacterListActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,17 +18,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "This will be a search function...", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-
-        MarvelServiceHandler.getAllCharacters(character_list)
-
-//        character_list.apply {
-//            layoutManager = LinearLayoutManager(this@MainActivity)
-//            adapter = CharacterAdapter(charactersList)
-//        }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -46,6 +35,11 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> true
+            R.id.action_characters -> {
+                val intent = Intent(applicationContext, CharacterListActivity::class.java)
+                this.startActivity(intent)
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

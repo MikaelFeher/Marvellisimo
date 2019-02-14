@@ -7,11 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.androidcourse.marvellisimo.R
-import com.androidcourse.marvellisimo.dto.CharacterDataContainer
-import com.androidcourse.marvellisimo.dto.CharacterDataWrapper
 import com.androidcourse.marvellisimo.models.Character
-import com.androidcourse.marvellisimo.retrofit.MarvelService
-import com.androidcourse.marvellisimo.retrofit.MarvelServiceHandler
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.character_list_item.view.*
 

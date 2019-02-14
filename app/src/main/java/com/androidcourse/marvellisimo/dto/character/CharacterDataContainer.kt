@@ -1,4 +1,4 @@
-package com.androidcourse.marvellisimo.dto
+package com.androidcourse.marvellisimo.dto.character
 
 import com.androidcourse.marvellisimo.models.Character
 
