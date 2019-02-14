@@ -25,12 +25,12 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-        MarvelServiceHandler.getAllCharacters()
+        MarvelServiceHandler.getAllCharacters(character_list)
 
-        character_list.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = CharacterAdapter()
-        }
+//        character_list.apply {
+//            layoutManager = LinearLayoutManager(this@MainActivity)
+//            adapter = CharacterAdapter(charactersList)
+//        }
 
     }
 
