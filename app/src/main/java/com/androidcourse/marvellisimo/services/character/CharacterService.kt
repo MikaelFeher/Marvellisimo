@@ -8,8 +8,13 @@ import retrofit2.http.Query
 
 interface CharacterService {
     @GET("characters")
-    fun getAllCharacters(@Query("apikey")apikey:String, @Query("ts")ts:String, @Query("hash") hash:String): Call<CharacterDataWrapper>
+    fun getAllCharacters(@Query("apikey")apikey:String,
+                         @Query("ts")ts:String,
+                         @Query("hash") hash:String): Call<CharacterDataWrapper>
 
     @GET("characters/{id}")
-    fun getCharacterById(@Path("id") id:Int, @Query("apikey")apikey:String, @Query("ts")ts:String, @Query("hash") hash:String): Call<CharacterDataWrapper>
+    fun getCharacterById(@Path("id") id:Int,
+                         @Query("apikey")apikey:String,
+                         @Query("ts")ts:String,
+                         @Query("hash") hash:String): Call<CharacterDataWrapper>
 }

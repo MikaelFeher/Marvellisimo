@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import com.androidcourse.marvellisimo.adapters.CharacterAdapter
+import com.androidcourse.marvellisimo.adapters.CharacterListAdapter
 import com.androidcourse.marvellisimo.dto.character.CharacterDataWrapper
 import com.androidcourse.marvellisimo.models.Character
 import okhttp3.OkHttpClient
@@ -74,7 +74,7 @@ object CharacterServiceHandler {
     private fun showData(results: List<Character>, character_list: RecyclerView, context: Context) {
         character_list.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = CharacterAdapter(results, context)
+            adapter = CharacterListAdapter(results, context)
         }
     }
 }

@@ -1,21 +1,23 @@
 package com.androidcourse.marvellisimo.adapters
 
 import android.content.Context
+import android.content.Intent
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.androidcourse.marvellisimo.helpers.CustomItemClickListener
 import com.androidcourse.marvellisimo.R
+import com.androidcourse.marvellisimo.activities.CharacterActivity
 import com.androidcourse.marvellisimo.models.Character
-import com.androidcourse.marvellisimo.services.character.CharacterServiceHandler
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.character_list_item.view.*
 
-class CharacterAdapter(private val charactersList: List<Character>, context: Context) : RecyclerView.Adapter<CustomViewHolder>() {
+class CharacterListAdapter(private val charactersList: List<Character>, context: Context) :
+    RecyclerView.Adapter<CustomViewHolder>() {
 
     var mContext = context
 
@@ -37,13 +39,14 @@ class CharacterAdapter(private val charactersList: List<Character>, context: Con
 
         holder.setOnCustomItemClickListener(object : CustomItemClickListener {
             override fun onCustomClickListener(view: View, pos: Int) {
-                Toast.makeText(mContext, "Character id: ${character.id}", Toast.LENGTH_LONG).show()
-                CharacterServiceHandler.getCharacterById(character.id)
+                val i: Intent = Intent(mContext, CharacterActivity::class.java)
+                i.putExtra("characterId", character.id)
+                mContext.startActivity(i)
             }
         })
     }
 
-    fun createImage(character: Character, holder: CustomViewHolder){
+    fun createImage(character: Character, holder: CustomViewHolder) {
         var url = "${character.thumbnail.path}/landscape_large.${character.thumbnail.extension}"
         url = url.replace("http", "https")
         Picasso.get().load(url).into(holder.img)
@@ -55,6 +58,7 @@ class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClick
     val name: TextView = view.tvName
     val img: ImageView = view.ivThumbnail
     var customItemClickListener: CustomItemClickListener? = null
+
     init {
         view.setOnClickListener(this)
     }

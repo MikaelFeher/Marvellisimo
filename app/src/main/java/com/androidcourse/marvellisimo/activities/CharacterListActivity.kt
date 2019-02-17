@@ -15,7 +15,7 @@ class CharacterListActivity : AppCompatActivity() {
 
         character_list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
-        CharacterServiceHandler.getAllCharacters(character_list, applicationContext)
+        CharacterServiceHandler.getAllCharacters(character_list, this)
 
     }
 }
