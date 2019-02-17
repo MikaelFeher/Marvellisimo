@@ -55,20 +55,14 @@ object CharacterServiceHandler {
     }
 
     // Get single character...
-    fun getCharacterById(id: Int) {
-        SERVICE.getCharacterById(
-            id,
+    fun getCharacterById(id: String) : Call<CharacterDataWrapper>{
+
+        return SERVICE.getCharacterById(
+            id.toInt(),
             API_KEY,
             "1",
             HASH
-        ).enqueue(object : Callback<CharacterDataWrapper> {
-            override fun onResponse(call: Call<CharacterDataWrapper>, response: Response<CharacterDataWrapper>) {
-                println(response.body()!!.data.results[0])
-            }
-            override fun onFailure(call: Call<CharacterDataWrapper>, t: Throwable) {
-                t.message
-            }
-        })
+        )
     }
 
     private fun showData(results: List<Character>, character_list: RecyclerView, context: Context) {
