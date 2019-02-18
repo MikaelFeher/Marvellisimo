@@ -45,6 +45,7 @@ class CharacterActivity : AppCompatActivity() {
                 println(response.body()!!.data.results[0])
                 character = response.body()!!.data.results[0]
                 setCharacterViewFields(character!!)
+
             }
 
             override fun onFailure(call: Call<CharacterDataWrapper>, t: Throwable) {
