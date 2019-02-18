@@ -20,8 +20,8 @@ object CharacterServiceHandler {
     const val API_KEY = "b81ab5acd75812bc101c025548dffbdb"
     const val HASH = "31e691f1a0196f2e7d372b067f1ce131"
 
-
-    //http://gateway.marvel.com/v1/public/characters?ts=1&apikey=b81ab5acd75812bc101c025548dffbdb&hash=31e691f1a0196f2e7d372b067f1ce131
+    // TODO: Remove before delivery...
+    // http://gateway.marvel.com/v1/public/characters?ts=1&apikey=b81ab5acd75812bc101c025548dffbdb&hash=31e691f1a0196f2e7d372b067f1ce131
 
     private val okHttpClient = OkHttpClient.Builder()
         .build()

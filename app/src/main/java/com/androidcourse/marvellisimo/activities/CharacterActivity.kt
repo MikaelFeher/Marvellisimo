@@ -42,7 +42,6 @@ class CharacterActivity : AppCompatActivity() {
         CharacterServiceHandler.getCharacterById(characterId.toString()).enqueue(object :
             Callback<CharacterDataWrapper> {
             override fun onResponse(call: Call<CharacterDataWrapper>, response: Response<CharacterDataWrapper>) {
-                println(response.body()!!.data.results[0])
                 character = response.body()!!.data.results[0]
                 setCharacterViewFields(character!!)
 

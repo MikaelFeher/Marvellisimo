@@ -32,14 +32,12 @@ class CharacterListAdapter(private val charactersList: List<Character>, context:
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        println("charactersList.size ${charactersList.size}")
         val character = charactersList[position]
         holder.name.text = character.name
         createImage(character, holder)
 
         holder.setOnCustomItemClickListener(object : CustomItemClickListener {
             override fun onCustomClickListener(view: View, pos: Int) {
-                println("character id: ${character.id}")
                 val i = Intent(mContext, CharacterActivity::class.java)
                 i.putExtra("characterId", character.id)
                 mContext.startActivity(i)
