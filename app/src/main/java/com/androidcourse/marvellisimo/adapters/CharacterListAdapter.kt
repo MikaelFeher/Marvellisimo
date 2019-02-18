@@ -39,8 +39,9 @@ class CharacterListAdapter(private val charactersList: List<Character>, context:
 
         holder.setOnCustomItemClickListener(object : CustomItemClickListener {
             override fun onCustomClickListener(view: View, pos: Int) {
-                val i: Intent = Intent(mContext, CharacterActivity::class.java)
-                i.putExtra("character", character.id)
+                println("character id: ${character.id}")
+                val i = Intent(mContext, CharacterActivity::class.java)
+                i.putExtra("characterId", character.id)
                 mContext.startActivity(i)
             }
         })
