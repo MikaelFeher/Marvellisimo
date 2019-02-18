@@ -1,15 +1,13 @@
-package com.androidcourse.marvellisimo.activities
+package com.androidcourse.marvellisimo.activities.character
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
-import android.widget.TextView
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.dto.character.CharacterDataWrapper
-import com.androidcourse.marvellisimo.models.Character
+import com.androidcourse.marvellisimo.models.character.Character
 import com.androidcourse.marvellisimo.services.character.CharacterServiceHandler
 import com.squareup.picasso.Picasso
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_character.*
 import retrofit2.Call
 import retrofit2.Callback

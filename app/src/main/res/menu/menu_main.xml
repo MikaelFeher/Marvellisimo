@@ -2,13 +2,14 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.androidcourse.marvellisimo.MainActivity">
-    <item android:id="@+id/action_settings"
-          android:title="@string/action_settings"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
 
     <item android:id="@+id/action_characters"
           android:title="@string/action_characters"
+          android:orderInCategory="100"
+          app:showAsAction="never"/>
+
+    <item android:id="@+id/action_comics"
+          android:title="@string/action_comics"
           android:orderInCategory="100"
           app:showAsAction="never"/>
 </menu>

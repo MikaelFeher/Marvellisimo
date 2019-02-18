@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import com.androidcourse.marvellisimo.adapters.CharacterListAdapter
+import com.androidcourse.marvellisimo.adapters.character.CharacterListAdapter
 import com.androidcourse.marvellisimo.dto.character.CharacterDataWrapper
-import com.androidcourse.marvellisimo.models.Character
+import com.androidcourse.marvellisimo.models.character.Character
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback

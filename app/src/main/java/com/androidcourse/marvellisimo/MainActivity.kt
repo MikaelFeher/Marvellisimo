@@ -6,8 +6,8 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import com.androidcourse.marvellisimo.activities.CharacterListActivity
+import com.androidcourse.marvellisimo.activities.character.CharacterListActivity
+import com.androidcourse.marvellisimo.activities.comics.ComicsListActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -34,9 +34,13 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
             R.id.action_characters -> {
                 val intent = Intent(applicationContext, CharacterListActivity::class.java)
+                this.startActivity(intent)
+                return true
+            }
+            R.id.action_comics -> {
+                val intent = Intent(applicationContext, ComicsListActivity::class.java)
                 this.startActivity(intent)
                 return true
             }

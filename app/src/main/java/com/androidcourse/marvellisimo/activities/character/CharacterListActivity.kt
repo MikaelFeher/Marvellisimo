@@ -1,4 +1,4 @@
-package com.androidcourse.marvellisimo.activities
+package com.androidcourse.marvellisimo.activities.character
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle

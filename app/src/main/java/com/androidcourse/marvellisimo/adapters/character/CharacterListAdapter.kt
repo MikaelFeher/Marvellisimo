@@ -1,8 +1,7 @@
-package com.androidcourse.marvellisimo.adapters
+package com.androidcourse.marvellisimo.adapters.character
 
 import android.content.Context
 import android.content.Intent
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +10,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.androidcourse.marvellisimo.helpers.CustomItemClickListener
 import com.androidcourse.marvellisimo.R
-import com.androidcourse.marvellisimo.activities.CharacterActivity
-import com.androidcourse.marvellisimo.models.Character
+import com.androidcourse.marvellisimo.activities.character.CharacterActivity
+import com.androidcourse.marvellisimo.models.character.Character
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.character_list_item.view.*
 
 class CharacterListAdapter(private val charactersList: List<Character>, context: Context) :
-    RecyclerView.Adapter<CustomViewHolder>() {
+    RecyclerView.Adapter<CharacterListAdapter.CustomViewHolder>() {
 
     var mContext = context
 
@@ -51,23 +50,23 @@ class CharacterListAdapter(private val charactersList: List<Character>, context:
         Picasso.get().load(url).into(holder.img)
     }
 
+    class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+        val name: TextView = view.tvName
+        val img: ImageView = view.ivThumbnail
+        var customItemClickListener: CustomItemClickListener? = null
+
+        init {
+            view.setOnClickListener(this)
+        }
+
+        fun setOnCustomItemClickListener(itemClickListener: CustomItemClickListener) {
+            this.customItemClickListener = itemClickListener
+        }
+
+        override fun onClick(itemView: View?) {
+            this.customItemClickListener!!.onCustomClickListener(itemView!!, adapterPosition)
+        }
+
+    }
 }
 
-class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
-    val name: TextView = view.tvName
-    val img: ImageView = view.ivThumbnail
-    var customItemClickListener: CustomItemClickListener? = null
-
-    init {
-        view.setOnClickListener(this)
-    }
-
-    fun setOnCustomItemClickListener(itemClickListener: CustomItemClickListener) {
-        this.customItemClickListener = itemClickListener
-    }
-
-    override fun onClick(itemView: View?) {
-        this.customItemClickListener!!.onCustomClickListener(itemView!!, adapterPosition)
-    }
-
-}

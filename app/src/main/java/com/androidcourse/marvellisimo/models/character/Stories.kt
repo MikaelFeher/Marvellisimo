@@ -1,6 +1,6 @@
-package com.androidcourse.marvellisimo.models
+package com.androidcourse.marvellisimo.models.character
 
-data class Events(
+data class Stories(
     val available: Int,
     val collectionURI: String,
     val items: List<Any>,

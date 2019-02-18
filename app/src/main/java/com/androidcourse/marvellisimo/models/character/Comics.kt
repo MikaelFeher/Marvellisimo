@@ -1,4 +1,4 @@
-package com.androidcourse.marvellisimo.models
+package com.androidcourse.marvellisimo.models.character
 
 data class Comics(
     val available: Int,
