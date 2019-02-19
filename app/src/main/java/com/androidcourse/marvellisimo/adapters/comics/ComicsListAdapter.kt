@@ -1,6 +1,7 @@
 package com.androidcourse.marvellisimo.adapters.comics
 
 import android.content.Context
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -46,7 +47,9 @@ class ComicsListAdapter(private val comicsList: List<Comics>, private val contex
         var customItemClickListener: CustomItemClickListener? = null
 
         init {
-            view.setOnClickListener(this)
+            view.setOnClickListener{
+                it.setBackgroundColor( Color.GREEN)
+            }
         }
 
         fun setOnCustomItemClickListener(itemClickListener: CustomItemClickListener) {

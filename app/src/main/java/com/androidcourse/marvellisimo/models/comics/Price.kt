@@ -1,6 +1,6 @@
 package com.androidcourse.marvellisimo.models.comics
 
 data class Price(
-    val price: Int,
+    val price: Float,
     val type: String
 )
