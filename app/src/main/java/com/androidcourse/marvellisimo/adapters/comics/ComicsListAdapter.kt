@@ -16,7 +16,7 @@ import com.androidcourse.marvellisimo.models.comics.Comics
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.comics_list_item.view.*
 
-class ComicsListAdapter(private val comicsList: List<Comics>, private val context: Context) : RecyclerView.Adapter<ComicsListAdapter.CustomViewHolder>() {
+class ComicsListAdapter(private val comicsList: List<Comics>, context: Context) : RecyclerView.Adapter<ComicsListAdapter.CustomViewHolder>() {
     val mContext = context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -56,9 +56,7 @@ class ComicsListAdapter(private val comicsList: List<Comics>, private val contex
         var customItemClickListener: CustomItemClickListener? = null
 
         init {
-            view.setOnClickListener{
-                it.setBackgroundColor( Color.GREEN)
-            }
+            view.setOnClickListener(this)
         }
 
         fun setOnCustomItemClickListener(itemClickListener: CustomItemClickListener) {

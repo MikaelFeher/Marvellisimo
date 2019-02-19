@@ -9,54 +9,61 @@
 
     <ImageView
             android:layout_width="181dp"
-            android:layout_height="196dp"
+            android:layout_height="216dp"
             app:srcCompat="@drawable/default_image"
             android:id="@+id/iv_comics_thumbnail"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"/>
 
     <TextView
             android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="34dp"
-            android:id="@+id/tv_comics_title"
-            android:layout_marginTop="28dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_comics_details_title"
+            android:layout_marginTop="24dp"
             app:layout_constraintTop_toBottomOf="@+id/iv_comics_thumbnail"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:padding="10dp"
             android:textStyle="bold"
-            android:textSize="24sp"
             android:textColor="@android:color/black"
+            android:textSize="24sp"
             app:layout_constraintHorizontal_bias="0.498"/>
 
     <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_comics_description"
-            android:layout_marginTop="17dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_comics_title"
+            android:id="@+id/tv_comics_details_description"
+            android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_comics_details_title"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginStart="8dp"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/black"
+            android:textSize="18dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"/>
 
 
     <android.support.v7.widget.RecyclerView
             android:layout_width="395dp"
             android:layout_height="209dp"
-            android:id="@+id/rv_images_list"
+            android:id="@+id/rv_comics_details_images_list"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_comics_description"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_comics_details_description"/>
 
 </android.support.constraint.ConstraintLayout>
