@@ -1,6 +1,7 @@
 package com.androidcourse.marvellisimo.adapters.comics
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.androidcourse.marvellisimo.R
+import com.androidcourse.marvellisimo.activities.comics.ComicsActivity
 import com.androidcourse.marvellisimo.helpers.CustomItemClickListener
 import com.androidcourse.marvellisimo.models.comics.Comics
 import com.squareup.picasso.Picasso
@@ -33,6 +35,13 @@ class ComicsListAdapter(private val comicsList: List<Comics>, private val contex
         holder.comicTitle.text = comic.title
         createImage(comic, holder)
 
+        holder.setOnCustomItemClickListener(object : CustomItemClickListener {
+            override fun onCustomClickListener(view: View, pos: Int) {
+                val i = Intent(mContext, ComicsActivity::class.java)
+                i.putExtra("comicId", comic.id)
+                mContext.startActivity(i)
+            }
+        })
     }
 
     private fun createImage(comic: Comics, holder: CustomViewHolder) {
@@ -42,8 +51,8 @@ class ComicsListAdapter(private val comicsList: List<Comics>, private val contex
     }
 
     class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
-        val comicTitle: TextView = view.tv_comics_title
-        val comicImg: ImageView = view.iv_comics_Thumbnail
+        val comicTitle: TextView = view.tv_comics_list_item_title
+        val comicImg: ImageView = view.iv_comics_list_item_Thumbnail
         var customItemClickListener: CustomItemClickListener? = null
 
         init {

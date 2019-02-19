@@ -54,6 +54,12 @@ object ComicsServiceHandler {
         })
     }
 
+    // Get single comic...
+    fun getComicById(id: String): Call<ComicsDataWrapper> {
+        return SERVICE.getComicById(id.toInt(), API_KEY, "1", HASH)
+    }
+
+
     private fun showData(results: List<Comics>, comics_list: RecyclerView, context: Context) {
         println("Result: ${results[0]}")
         comics_list.apply {
@@ -61,4 +67,5 @@ object ComicsServiceHandler {
             adapter = ComicsListAdapter(results, context)
         }
     }
+
 }

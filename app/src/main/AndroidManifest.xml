@@ -11,6 +11,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".activities.comics.ComicsActivity">
+        </activity>
         <activity android:name=".activities.comics.ComicsListActivity">
         </activity>
         <activity android:name=".activities.character.CharacterActivity">
