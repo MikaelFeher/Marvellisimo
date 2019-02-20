@@ -19,7 +19,7 @@
                 >
 
             <TextView
-                    android:text="TextView"
+                    android:text="Title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_comics_details_title"
@@ -37,7 +37,7 @@
                     app:layout_constraintHorizontal_bias="0.498"/>
 
             <TextView
-                    android:text="TextView"
+                    android:text="Desctription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_comics_details_description"
@@ -53,6 +53,22 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"/>
 
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@id/rv_comics_details_images_list"
+                    android:text="Browse covers by swiping..."
+                    app:layout_constraintBottom_toTopOf="@+id/rv_comics_details_images_list"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_comics_details_description"
+                    app:layout_constraintHorizontal_bias="0.036"
+                    app:layout_constraintVertical_bias="1.0"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/tv_label_for_rv_comics_details_images_list"/>
+
             <android.support.v7.widget.RecyclerView
                     android:layout_width="395dp"
                     android:layout_height="209dp"
@@ -61,8 +77,9 @@
                     android:layout_marginStart="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_comics_details_description">
+                    android:layout_marginTop="36dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_comics_details_description"
+                    app:layout_constraintHorizontal_bias="0.0">
 
             </android.support.v7.widget.RecyclerView>
 

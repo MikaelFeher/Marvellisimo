@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.adapters.comics.ComicsDetailsImageAdapter
 import com.androidcourse.marvellisimo.dto.comics.ComicsDataWrapper
@@ -39,6 +40,9 @@ class ComicsActivity : AppCompatActivity() {
                 comic = response.body()!!.data.results[0]
                 val imagesList : List<Image> = response.body()!!.data.results[0].images
                 val comicsDetailsImageList = rv_comics_details_images_list
+                val labelForImagesList = tv_label_for_rv_comics_details_images_list
+
+                if (imagesList.size < 2) labelForImagesList.visibility = View.GONE
 
                 setComicsViewFields(comic!!)
                 showData(imagesList, comicsDetailsImageList, this@ComicsActivity)
