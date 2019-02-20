@@ -6,7 +6,9 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="5dp"
-        android:id="@+id/comics_list_item">
+        android:id="@+id/comics_list_item"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
 
     <ImageView
