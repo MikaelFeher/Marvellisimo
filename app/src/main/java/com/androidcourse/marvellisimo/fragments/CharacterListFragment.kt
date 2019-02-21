@@ -10,7 +10,7 @@ import com.androidcourse.marvellisimo.adapters.character.CharacterListAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
 import kotlinx.android.synthetic.main.fragment_character_list.view.*
 
-class CharacterListFragment() : Fragment() {
+class CharacterListFragment : Fragment() {
     private var viewItem : View? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
