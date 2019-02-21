@@ -1,12 +1,8 @@
 package com.androidcourse.marvellisimo.services.character
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import com.androidcourse.marvellisimo.adapters.character.CharacterListAdapter
+import com.androidcourse.marvellisimo.dto.DataHandler
 import com.androidcourse.marvellisimo.dto.character.CharacterDataWrapper
-import com.androidcourse.marvellisimo.models.character.Character
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,17 +32,15 @@ object CharacterServiceHandler {
 
     // Get all characters...
     @SuppressLint("CheckResult")
-    fun getAllCharacters(character_list : RecyclerView, context: Context) {
+    fun getAllCharacters() {
         SERVICE.getAllCharacters(
-            API_KEY, "1",
-            HASH
+            apikey = API_KEY,
+            ts ="1",
+            hash = HASH
         ).enqueue(object : Callback<CharacterDataWrapper> {
             override fun onResponse(call: Call<CharacterDataWrapper>, response: Response<CharacterDataWrapper>) {
-                showData(
-                    response.body()!!.data.results,
-                    character_list,
-                    context
-                )
+                DataHandler.characters = response.body()!!.data.results
+
             }
             override fun onFailure(call: Call<CharacterDataWrapper>, t: Throwable) {
                 t.message
@@ -58,17 +52,10 @@ object CharacterServiceHandler {
     fun getCharacterById(id: String) : Call<CharacterDataWrapper>{
 
         return SERVICE.getCharacterById(
-            id.toInt(),
-            API_KEY,
-            "1",
-            HASH
+            id = id.toInt(),
+            apikey = API_KEY,
+            ts ="1",
+            hash = HASH
         )
-    }
-
-    private fun showData(results: List<Character>, character_list: RecyclerView, context: Context) {
-        character_list.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = CharacterListAdapter(results, context)
-        }
     }
 }

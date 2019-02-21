@@ -5,6 +5,7 @@ import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.androidcourse.marvellisimo.adapters.comics.ComicsListAdapter
+import com.androidcourse.marvellisimo.dto.DataHandler
 import com.androidcourse.marvellisimo.dto.comics.ComicsDataWrapper
 import com.androidcourse.marvellisimo.models.comics.Comics
 import okhttp3.OkHttpClient
@@ -35,18 +36,18 @@ object ComicsServiceHandler {
 
     // Get all comics...
     @SuppressLint("CheckResult")
-    fun getAllComics(comics_list : RecyclerView, context: Context) {
+    fun getAllComics() {
         SERVICE.getAllComics(
             API_KEY, "1",
             HASH
         ).enqueue(object : Callback<ComicsDataWrapper> {
             override fun onResponse(call: Call<ComicsDataWrapper>, response: Response<ComicsDataWrapper>) {
-                println("Result in onResponse: ${response.body()!!.data.results[0]}")
-                ComicsServiceHandler.showData(
-                    response.body()!!.data.results,
-                    comics_list,
-                    context
-                )
+                DataHandler.comics = response.body()!!.data.results
+//                ComicsServiceHandler.showData(
+//                    response.body()!!.data.results,
+//                    comics_list,
+//                    context
+//                )
             }
             override fun onFailure(call: Call<ComicsDataWrapper>, t: Throwable) {
                 t.message
