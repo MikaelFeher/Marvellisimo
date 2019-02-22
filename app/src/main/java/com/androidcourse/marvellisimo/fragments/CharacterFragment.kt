@@ -5,20 +5,29 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.androidcourse.marvellisimo.R
-import com.androidcourse.marvellisimo.adapters.character.CharacterListAdapter
-import com.androidcourse.marvellisimo.dto.DataHandler
-import kotlinx.android.synthetic.main.fragment_character_list.view.*
 
-class CharacterListFragment : Fragment() {
+import com.androidcourse.marvellisimo.R
+import com.androidcourse.marvellisimo.dto.DataHandler
+
+
+/**
+ * A simple [Fragment] subclass.
+ *
+ */
+class CharacterFragment : Fragment() {
     private var viewItem : View? = null
+    private var characterId : Any = 0
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val mIntent = activity!!.intent
 
-        var characterList = DataHandler.characters!!
-        val characterListFragment = viewItem!!.rv_fragment_character_list
-        characterListFragment.adapter = CharacterListAdapter(characterList)
+        if (mIntent.hasExtra("characterId")){
+            characterId = mIntent.extras.get("characterId")
+        }
+        val character = DataHandler.getCharacter(characterId)
+
+        println("character from characterFragment: $character")
     }
 
     override fun onCreateView(
@@ -26,7 +35,9 @@ class CharacterListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        viewItem = inflater.inflate(R.layout.fragment_character_list, container, false)
+        viewItem = inflater.inflate(R.layout.fragment_character, container, false)
         return viewItem
     }
+
+
 }

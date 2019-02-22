@@ -30,8 +30,8 @@ class CharacterActivity : AppCompatActivity() {
     }
 
     private fun setCharacterViewFields(character: Character) {
-        tv_character_name.text = character.name
-        tv_character_description.text = if (character.description.isNotEmpty()) character.description else "No description available..."
+        tv_fragment_character_name.text = character.name
+        tv_fragment_character_description.text = if (character.description.isNotEmpty()) character.description else "No description available..."
         createImage(character, iv_character_image)
     }
 

@@ -11,21 +11,27 @@ import android.view.MenuItem
 import com.androidcourse.marvellisimo.activities.comics.ComicsListActivity
 import com.androidcourse.marvellisimo.dto.DataHandler
 import com.androidcourse.marvellisimo.fragments.CharacterListFragment
+import com.androidcourse.marvellisimo.helpers.FragmentHandler
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity()  {
+class MainActivity : AppCompatActivity(), FragmentHandler {
+    override fun setNextFragment(fragment: Fragment) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private var characterListFragment : Fragment = CharacterListFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        // Initialize data...
+        DataHandler.initializeData()
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "This will be a search function...", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-        DataHandler.initializeData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

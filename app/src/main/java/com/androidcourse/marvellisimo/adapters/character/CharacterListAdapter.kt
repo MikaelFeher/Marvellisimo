@@ -1,17 +1,23 @@
 package com.androidcourse.marvellisimo.adapters.character
 
+import android.content.Context
 import android.content.Intent
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.androidcourse.marvellisimo.MainActivity
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.activities.character.CharacterActivity
+import com.androidcourse.marvellisimo.fragments.CharacterFragment
+import com.androidcourse.marvellisimo.helpers.FragmentHandler
 import com.androidcourse.marvellisimo.models.character.Character
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.character_list_item.view.*
+
 
 class CharacterListAdapter(private val charactersList: List<Character>) :
     RecyclerView.Adapter<CharacterListAdapter.CustomViewHolder>() {
@@ -47,10 +53,13 @@ class CharacterListAdapter(private val charactersList: List<Character>) :
         init {
             view.setOnClickListener{
                 val context = it.context
+                val mActivity : FragmentHandler = context as FragmentHandler
                 val characterId = it.tag
-                val i = Intent(context, CharacterActivity::class.java)
+                val i = Intent(context, MainActivity::class.java)
                 i.putExtra("characterId", characterId.toString())
-                context.startActivity(i)
+                i.putExtra("setCharacterFragment", true)
+//                context.startActivity(i)
+
             }
         }
 
