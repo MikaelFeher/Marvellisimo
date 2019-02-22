@@ -1,13 +1,8 @@
 package com.androidcourse.marvellisimo.services.comics
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import com.androidcourse.marvellisimo.adapters.comics.ComicsListAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
 import com.androidcourse.marvellisimo.dto.comics.ComicsDataWrapper
-import com.androidcourse.marvellisimo.models.comics.Comics
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,12 +33,14 @@ object ComicsServiceHandler {
     @SuppressLint("CheckResult")
     fun getAllComics() {
         SERVICE.getAllComics(
-            API_KEY, "1",
-            HASH
+            apikey = API_KEY,
+            ts = "1",
+            hash = HASH
         ).enqueue(object : Callback<ComicsDataWrapper> {
             override fun onResponse(call: Call<ComicsDataWrapper>, response: Response<ComicsDataWrapper>) {
                 DataHandler.comics!!.postValue(response.body()!!.data.results)
             }
+
             override fun onFailure(call: Call<ComicsDataWrapper>, t: Throwable) {
                 t.message
             }
@@ -52,6 +49,15 @@ object ComicsServiceHandler {
 
     // Get single comic...
     fun getComicById(id: String): Call<ComicsDataWrapper> {
-        return SERVICE.getComicById(id.toInt(), API_KEY, "1", HASH)
+        return SERVICE.getComicById(id = id.toInt(), apikey = API_KEY, ts = "1", hash = HASH)
+    }
+
+    fun findComicByName(inputValue: String): Call<ComicsDataWrapper> {
+        return SERVICE.findComicsByName(
+                    nameStartsWith = inputValue,
+                    apikey = API_KEY,
+                    ts = "1",
+                    hash = HASH
+                )
     }
 }

@@ -58,4 +58,14 @@ object CharacterServiceHandler {
             hash = HASH
         )
     }
+
+    // Find characters by name...
+    fun findCharacterByName(name: String) : Call<CharacterDataWrapper>{
+        return SERVICE.findCharacterByName(
+            nameStartsWith = name,
+            apikey = API_KEY,
+            ts ="1",
+            hash = HASH
+        )
+    }
 }

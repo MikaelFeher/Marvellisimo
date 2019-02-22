@@ -29,7 +29,6 @@ class ComicsListFragment : Fragment() {
                 pb_fragment_comics_list_progressbar.visibility = View.GONE
                 comicsListFragment.adapter = ComicsListAdapter(it!!)
             }
-
         })
     }
 

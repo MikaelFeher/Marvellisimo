@@ -3,6 +3,11 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.androidcourse.marvellisimo.MainActivity">
 
+    <item android:id="@+id/action_home"
+          android:title="@string/home"
+          android:orderInCategory="100"
+          app:showAsAction="never"/>
+
     <item android:id="@+id/action_characters"
           android:title="@string/action_characters"
           android:orderInCategory="100"

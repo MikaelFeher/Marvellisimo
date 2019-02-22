@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import com.androidcourse.marvellisimo.dto.DataHandler
+import com.androidcourse.marvellisimo.fragments.HomeFragment
 import com.androidcourse.marvellisimo.fragments.characters.CharacterListFragment
 import com.androidcourse.marvellisimo.fragments.comics.ComicsListFragment
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
@@ -19,19 +20,17 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
 
     private var characterListFragment: Fragment = CharacterListFragment()
     private var comicsListFragment: Fragment = ComicsListFragment()
+    private var homeFragment: Fragment = HomeFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        setFragment(homeFragment)
 
         // Initialize data...
         DataHandler.initializeData()
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "This will be a search function...", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -45,6 +44,9 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
+            R.id.action_home -> {
+                return setFragment(homeFragment)
+            }
             R.id.action_characters -> {
                 return setFragment(characterListFragment)
             }
