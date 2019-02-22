@@ -44,10 +44,13 @@ class CharacterFragment : Fragment() {
         }
 
         DataHandler.character.observe(this, Observer {
-            println("characterName: ${it!!.name}")
-            setCharacterViewFields(it!!)
+            if (it == null) {
+                pb_fragment_character_progressbar.visibility = View.VISIBLE
+            } else {
+                pb_fragment_character_progressbar.visibility = View.GONE
+                setCharacterViewFields(it!!)
+            }
         })
-
     }
 
     override fun onCreateView(
@@ -57,6 +60,11 @@ class CharacterFragment : Fragment() {
         // Inflate the layout for this fragment
         viewItem = inflater.inflate(R.layout.fragment_character, container, false)
         return viewItem
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        DataHandler.character.postValue(null)
     }
 
     private fun setCharacterViewFields(character: Character) {
