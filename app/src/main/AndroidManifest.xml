@@ -15,8 +15,6 @@
         </activity>
         <activity android:name=".activities.comics.ComicsListActivity">
         </activity>
-        <activity android:name=".activities.character.CharacterActivity">
-        </activity>
         <activity
                 android:name=".MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">

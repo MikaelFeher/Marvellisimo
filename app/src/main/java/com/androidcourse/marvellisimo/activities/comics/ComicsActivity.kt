@@ -56,7 +56,7 @@ class ComicsActivity : AppCompatActivity() {
     }
 
     private fun setComicsViewFields(comic: Comics) {
-        tv_comics_details_title.text = comic.title
+        tv_fragment_comics_details_title.text = comic.title
         tv_comics_details_description.text = comic.description ?: "No description available..."
         createImage(comic)
     }
@@ -64,7 +64,7 @@ class ComicsActivity : AppCompatActivity() {
     private fun createImage(comic: Comics) {
         var url = "${comic.thumbnail.path}/landscape_large.${comic.thumbnail.extension}"
         url = url.replace("http", "https")
-        Picasso.get().load(url).into(iv_comics_thumbnail)
+        Picasso.get().load(url).into(iv_fragment_comics_thumbnail)
     }
 
     private fun showData(imagesList: List<Image>, comicsDetailsImageList: RecyclerView, context: Context) {

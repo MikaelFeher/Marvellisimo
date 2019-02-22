@@ -1,6 +1,5 @@
 package com.androidcourse.marvellisimo
 
-import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -11,13 +10,16 @@ import android.view.Menu
 import android.view.MenuItem
 import com.androidcourse.marvellisimo.activities.comics.ComicsListActivity
 import com.androidcourse.marvellisimo.dto.DataHandler
-import com.androidcourse.marvellisimo.fragments.CharacterListFragment
+import com.androidcourse.marvellisimo.fragments.characters.CharacterListFragment
+import com.androidcourse.marvellisimo.fragments.comics.ComicsListFragment
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), FragmentHandler {
 
-    private var characterListFragment: Fragment = CharacterListFragment()
+    private var characterListFragment: Fragment =
+        CharacterListFragment()
+    private var comicsListFragment: Fragment = ComicsListFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +50,7 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
                 return setFragment(characterListFragment)
             }
             R.id.action_comics -> {
-                val intent = Intent(applicationContext, ComicsListActivity::class.java)
-                this.startActivity(intent)
-                return true
+                return setFragment(comicsListFragment)
             }
             else -> super.onOptionsItemSelected(item)
         }

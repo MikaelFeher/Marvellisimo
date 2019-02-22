@@ -1,4 +1,4 @@
-package com.androidcourse.marvellisimo.fragments
+package com.androidcourse.marvellisimo.fragments.characters
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle

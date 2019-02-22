@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.androidcourse.marvellisimo.R
-import com.androidcourse.marvellisimo.fragments.CharacterFragment
+import com.androidcourse.marvellisimo.fragments.characters.CharacterFragment
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
 import com.androidcourse.marvellisimo.models.character.Character
 import com.squareup.picasso.Picasso
@@ -52,12 +52,6 @@ class CharacterListAdapter(private val charactersList: List<Character>) :
                 val characterId = it.tag
 
                 mActivity.setNextFragment(CharacterFragment.create(characterId.toString()))
-
-//                val i = Intent(context, MainActivity::class.java)
-//                i.putExtra("characterId", characterId.toString())
-//                i.putExtra("setCharacterFragment", true)
-////                context.startActivity(i)
-
             }
         }
 

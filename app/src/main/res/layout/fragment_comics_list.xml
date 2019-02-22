@@ -4,14 +4,14 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".fragments.characters.CharacterListFragment">
+             tools:context=".fragments.comics.ComicsListFragment">
 
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:context=".fragments.comics.ComicsListActivity">
 
         <android.support.v7.widget.RecyclerView
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 android:layout_width="403dp"
                 android:layout_height="597dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -22,6 +22,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:id="@+id/rv_fragment_character_list"/>
+                android:id="@+id/rv_fragment_comics_list"/>
+
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>
