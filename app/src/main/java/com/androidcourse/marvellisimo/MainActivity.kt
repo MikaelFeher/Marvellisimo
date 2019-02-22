@@ -1,5 +1,6 @@
 package com.androidcourse.marvellisimo
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -15,16 +16,14 @@ import com.androidcourse.marvellisimo.helpers.FragmentHandler
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), FragmentHandler {
-    override fun setNextFragment(fragment: Fragment) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
-    private var characterListFragment : Fragment = CharacterListFragment()
+    private var characterListFragment: Fragment = CharacterListFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
         // Initialize data...
         DataHandler.initializeData()
 
@@ -46,13 +45,7 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_characters -> {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.main_container, characterListFragment)
-                    .addToBackStack(characterListFragment.toString())
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
-                return true
+                return setFragment(characterListFragment)
             }
             R.id.action_comics -> {
                 val intent = Intent(applicationContext, ComicsListActivity::class.java)
@@ -62,4 +55,20 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    override fun setNextFragment(fragment: Fragment) {
+        setFragment(fragment)
+    }
+
+    private fun setFragment(fragment: Fragment): Boolean {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_container, fragment)
+            .addToBackStack(fragment.toString())
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .commit()
+        return true
+    }
+
+
 }

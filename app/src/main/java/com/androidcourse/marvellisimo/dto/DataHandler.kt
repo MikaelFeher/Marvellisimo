@@ -1,5 +1,7 @@
 package com.androidcourse.marvellisimo.dto
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import com.androidcourse.marvellisimo.dto.character.CharacterDataWrapper
 import com.androidcourse.marvellisimo.models.character.Character
 import com.androidcourse.marvellisimo.models.comics.Comics
@@ -12,21 +14,21 @@ import retrofit2.Response
 object DataHandler {
     var characters: List<Character>? = null
     var comics: List<Comics>? = null
-    var character: Character? = null
+    var character: MutableLiveData<Character> = MutableLiveData()
 
     fun initializeData() {
         CharacterServiceHandler.getAllCharacters()
         ComicsServiceHandler.getAllComics()
     }
 
-    fun getCharacter(characterId: Any) : Character {
-        var c : Character? = null
-        CharacterServiceHandler.getCharacterById(characterId.toString()).enqueue(object :
+    fun getCharacter(characterId: String) {
+
+        CharacterServiceHandler.getCharacterById(characterId).enqueue(object :
             Callback<CharacterDataWrapper> {
             override fun onResponse(call: Call<CharacterDataWrapper>, response: Response<CharacterDataWrapper>) {
 //                character = response.body()!!.data.results[0]
 //                setCharacterViewFields(character!!)
-                c = response.body()!!.data.results[0]
+                character.postValue(response.body()!!.data.results[0])
 
             }
 
@@ -34,6 +36,5 @@ object DataHandler {
                 t.message
             }
         })
-        return c!!
     }
 }
