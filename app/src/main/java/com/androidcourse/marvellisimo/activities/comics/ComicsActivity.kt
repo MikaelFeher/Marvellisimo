@@ -39,8 +39,8 @@ class ComicsActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ComicsDataWrapper>, response: Response<ComicsDataWrapper>) {
                 comic = response.body()!!.data.results[0]
                 val imagesList : List<Image> = response.body()!!.data.results[0].images
-                val comicsDetailsImageList = rv_comics_details_images_list
-                val labelForImagesList = tv_label_for_rv_comics_details_images_list
+                val comicsDetailsImageList = rv_fragment_comics_details_images_list
+                val labelForImagesList = tv_fragment_label_for_rv_comics_details_images_list
 
                 if (imagesList.size < 2) labelForImagesList.visibility = View.GONE
 
@@ -57,7 +57,7 @@ class ComicsActivity : AppCompatActivity() {
 
     private fun setComicsViewFields(comic: Comics) {
         tv_fragment_comics_details_title.text = comic.title
-        tv_comics_details_description.text = comic.description ?: "No description available..."
+        tv_fragment_comics_details_description.text = comic.description ?: "No description available..."
         createImage(comic)
     }
 
@@ -70,7 +70,7 @@ class ComicsActivity : AppCompatActivity() {
     private fun showData(imagesList: List<Image>, comicsDetailsImageList: RecyclerView, context: Context) {
         comicsDetailsImageList.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = ComicsDetailsImageAdapter(imagesList, context)
+            adapter = ComicsDetailsImageAdapter(imagesList)
         }
     }
 }

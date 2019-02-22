@@ -1,6 +1,5 @@
 package com.androidcourse.marvellisimo
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -8,7 +7,8 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
-import com.androidcourse.marvellisimo.activities.comics.ComicsListActivity
+import android.view.View
+import android.widget.ProgressBar
 import com.androidcourse.marvellisimo.dto.DataHandler
 import com.androidcourse.marvellisimo.fragments.characters.CharacterListFragment
 import com.androidcourse.marvellisimo.fragments.comics.ComicsListFragment
@@ -17,8 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), FragmentHandler {
 
-    private var characterListFragment: Fragment =
-        CharacterListFragment()
+    private var characterListFragment: Fragment = CharacterListFragment()
     private var comicsListFragment: Fragment = ComicsListFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,6 +68,4 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
             .commit()
         return true
     }
-
-
 }

@@ -15,8 +15,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 object DataHandler {
-    var characters: List<Character>? = null
-    var comics: List<Comics>? = null
+    var characters: MutableLiveData<List<Character>>? = MutableLiveData()
+    var comics: MutableLiveData<List<Comics>>? = MutableLiveData()
     var character: MutableLiveData<Character> = MutableLiveData()
     var comic: MutableLiveData<Comics> = MutableLiveData()
 

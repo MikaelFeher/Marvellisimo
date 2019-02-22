@@ -23,5 +23,16 @@
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:id="@+id/rv_fragment_character_list"/>
+
+        <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="62dp"
+                android:layout_height="64dp"
+                android:id="@+id/pb_fragment_character_list_progressbar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

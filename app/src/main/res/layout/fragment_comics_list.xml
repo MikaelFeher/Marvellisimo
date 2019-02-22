@@ -12,6 +12,7 @@
             tools:context=".fragments.comics.ComicsListActivity">
 
         <android.support.v7.widget.RecyclerView
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 android:layout_width="403dp"
                 android:layout_height="597dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -23,6 +24,17 @@
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:id="@+id/rv_fragment_comics_list"/>
+
+        <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="62dp"
+                android:layout_height="64dp"
+                android:id="@+id/pb_fragment_comics_list_progressbar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

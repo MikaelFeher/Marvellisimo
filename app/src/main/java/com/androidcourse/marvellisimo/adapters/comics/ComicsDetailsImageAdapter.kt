@@ -11,12 +11,11 @@ import com.androidcourse.marvellisimo.models.comics.Image
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.comics_images_list_item.view.*
 
-class ComicsDetailsImageAdapter(imagesList: List<Image>, context: Context) : RecyclerView.Adapter<ComicsDetailsImageAdapter.CustomViewHolder>() {
+class ComicsDetailsImageAdapter(imagesList: List<Image>) : RecyclerView.Adapter<ComicsDetailsImageAdapter.CustomViewHolder>() {
 
-    val mImagesList = imagesList
+    private val mImagesList = imagesList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        println("mImagesList size: ${mImagesList.size}")
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.comics_images_list_item, parent, false)
         return CustomViewHolder(cellForRow)
@@ -28,7 +27,6 @@ class ComicsDetailsImageAdapter(imagesList: List<Image>, context: Context) : Rec
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         var image = mImagesList[position]
-        println("image: $image")
         createImage(image, holder)
     }
 

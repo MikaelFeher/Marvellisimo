@@ -9,7 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.androidcourse.marvellisimo.R
+import com.androidcourse.marvellisimo.adapters.comics.ComicsDetailsImageAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
+import com.androidcourse.marvellisimo.models.comics.Comics
+import com.androidcourse.marvellisimo.models.comics.Image
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_comic.*
 
 class ComicFragment : Fragment() {
 
@@ -37,12 +42,33 @@ class ComicFragment : Fragment() {
 
         DataHandler.comic.observe(this, Observer {
             if (it == null) {
-                pb_fragment_character_progressbar.visibility = View.VISIBLE
+                pb_fragment_comic_progressbar.visibility = View.VISIBLE
             } else {
-                pb_fragment_character_progressbar.visibility = View.GONE
-                setCharacterViewFields(it!!)
+                pb_fragment_comic_progressbar.visibility = View.GONE
+                setComicsViewFields(it!!)
+                setComicFragmentImageList(it.images)
             }
         })
+    }
+
+    private fun setComicFragmentImageList(imagesList: List<Image>) {
+        val comicsDetailsImageList = rv_fragment_comics_details_images_list
+        val labelForImagesList = tv_fragment_label_for_rv_comics_details_images_list
+
+        if (imagesList.size < 2) labelForImagesList.visibility = View.GONE
+        comicsDetailsImageList.adapter = ComicsDetailsImageAdapter(imagesList)
+    }
+
+    private fun setComicsViewFields(comic: Comics) {
+        tv_fragment_comics_details_title.text = comic.title
+        tv_fragment_comics_details_description.text = comic.description ?: "No description available..."
+        createImage(comic)
+    }
+
+    private fun createImage(comic: Comics) {
+        var url = "${comic.thumbnail.path}/landscape_large.${comic.thumbnail.extension}"
+        url = url.replace("http", "https")
+        Picasso.get().load(url).into(iv_fragment_comics_thumbnail)
     }
 
     override fun onCreateView(
@@ -50,11 +76,12 @@ class ComicFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_comic, container, false)
+        viewItem = inflater.inflate(R.layout.fragment_comic, container, false)
+        return viewItem
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        DataHandler.character.postValue(null)
+        DataHandler.comic.postValue(null)
     }
 }

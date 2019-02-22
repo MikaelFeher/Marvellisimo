@@ -16,14 +16,14 @@ class ComicsListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comics_list)
 
-        var comics = DataHandler.comics!!
-
-        comics_list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-
-        comics_list.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = ComicsListAdapter(comics, context)
-        }
+//        var comics = DataHandler.comics!!
+//
+//        comics_list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+//
+//        comics_list.apply {
+//            layoutManager = LinearLayoutManager(context)
+//            adapter = ComicsListAdapter(comics)
+//        }
 
     }
 }

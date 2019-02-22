@@ -42,12 +42,7 @@ object ComicsServiceHandler {
             HASH
         ).enqueue(object : Callback<ComicsDataWrapper> {
             override fun onResponse(call: Call<ComicsDataWrapper>, response: Response<ComicsDataWrapper>) {
-                DataHandler.comics = response.body()!!.data.results
-//                ComicsServiceHandler.showData(
-//                    response.body()!!.data.results,
-//                    comics_list,
-//                    context
-//                )
+                DataHandler.comics!!.postValue(response.body()!!.data.results)
             }
             override fun onFailure(call: Call<ComicsDataWrapper>, t: Throwable) {
                 t.message
@@ -59,14 +54,4 @@ object ComicsServiceHandler {
     fun getComicById(id: String): Call<ComicsDataWrapper> {
         return SERVICE.getComicById(id.toInt(), API_KEY, "1", HASH)
     }
-
-
-    private fun showData(results: List<Comics>, comics_list: RecyclerView, context: Context) {
-        println("Result: ${results[0]}")
-        comics_list.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = ComicsListAdapter(results, context)
-        }
-    }
-
 }

@@ -1,5 +1,6 @@
 package com.androidcourse.marvellisimo.fragments.characters
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.adapters.character.CharacterListAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
+import kotlinx.android.synthetic.main.fragment_character_list.*
 import kotlinx.android.synthetic.main.fragment_character_list.view.*
 
 class CharacterListFragment : Fragment() {
@@ -15,10 +17,16 @@ class CharacterListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        var characterList = DataHandler.characters!!
         val characterListFragment = viewItem!!.rv_fragment_character_list
-        characterListFragment.adapter = CharacterListAdapter(characterList)
+
+        DataHandler.characters!!.observe(this, Observer {
+            if (it == null) {
+                pb_fragment_character_list_progressbar.visibility = View.VISIBLE
+            } else {
+                pb_fragment_character_list_progressbar.visibility = View.GONE
+                characterListFragment.adapter = CharacterListAdapter(it!!)
+            }
+        })
     }
 
     override fun onCreateView(
