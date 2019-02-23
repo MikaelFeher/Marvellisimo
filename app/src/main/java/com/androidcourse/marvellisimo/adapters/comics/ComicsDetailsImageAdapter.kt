@@ -31,7 +31,7 @@ class ComicsDetailsImageAdapter(imagesList: List<Image>) : RecyclerView.Adapter<
     }
 
     private fun createImage(image: Image, holder: CustomViewHolder) {
-        var url = "${image.path}/landscape_large.${image.extension}"
+        var url = "${image.path}/portrait_large.${image.extension}"
         url = url.replace("http", "https")
         Picasso.get().load(url).into(holder.comicDetailsImageListItem)
     }

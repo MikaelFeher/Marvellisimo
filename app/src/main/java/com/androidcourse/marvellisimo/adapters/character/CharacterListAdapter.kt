@@ -35,7 +35,7 @@ class CharacterListAdapter(private val charactersList: List<Character>) :
     }
 
     private fun createImage(character: Character, holder: CustomViewHolder) {
-        var url = "${character.thumbnail.path}/landscape_large.${character.thumbnail.extension}"
+        var url = "${character.thumbnail.path}/portrait_large.${character.thumbnail.extension}"
         url = url.replace("http", "https")
         Picasso.get().load(url).into(holder.img)
     }

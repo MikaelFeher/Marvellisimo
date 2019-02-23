@@ -74,7 +74,7 @@ class CharacterFragment : Fragment() {
     }
 
     private fun createImage(character: Character, imageView: ImageView) {
-        var url = "${character.thumbnail.path}/landscape_large.${character.thumbnail.extension}"
+        var url = "${character.thumbnail.path}/portrait_large.${character.thumbnail.extension}"
         url = url.replace("http", "https")
         Picasso.get().load(url).into(imageView)
     }

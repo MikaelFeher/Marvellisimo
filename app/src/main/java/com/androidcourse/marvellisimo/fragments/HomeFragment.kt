@@ -21,18 +21,24 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var input = et_search_input
-        var switch = sw_search_switch
+        var rbCharacters = rb_search_type_characters
+        var rbComics = rb_search_type_comics
+        var radioGroup = rg_search_radio_button_group
         var btnSearch = btn_submit
 
         btnSearch.setOnClickListener {
-            search(input, switch)
-            var context: FragmentHandler = it.context as FragmentHandler
-            if (switch.isActivated) {
-                context.setNextFragment(SearchResultFragment.create(true))
+//            search(input, switch)
 
-            } else {
-                context.setNextFragment(SearchResultFragment.create(false))
-            }
+            println("RadioGroup: ${radioGroup.checkedRadioButtonId}")
+
+
+//            var context: FragmentHandler = it.context as FragmentHandler
+//            if (switch.isActivated) {
+//                context.setNextFragment(SearchResultFragment.create(true))
+//
+//            } else {
+//                context.setNextFragment(SearchResultFragment.create(false))
+//            }
         }
     }
 
@@ -45,12 +51,12 @@ class HomeFragment : Fragment() {
         return viewItem
     }
 
-    fun search(input: EditText, switch: Switch) {
-        var inputValue = input.text
-        if (switch.isActivated) {
-            DataHandler.findCharacter(inputValue.toString())
-        } else {
-            DataHandler.findComic(inputValue.toString())
-        }
-    }
+//    fun search(input: EditText) {
+//        var inputValue = input.text
+//        if () {
+//            DataHandler.findCharacter(inputValue.toString())
+//        } else {
+//            DataHandler.findComic(inputValue.toString())
+//        }
+//    }
 }

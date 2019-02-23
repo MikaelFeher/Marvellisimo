@@ -66,7 +66,7 @@ class ComicFragment : Fragment() {
     }
 
     private fun createImage(comic: Comics) {
-        var url = "${comic.thumbnail.path}/landscape_large.${comic.thumbnail.extension}"
+        var url = "${comic.thumbnail.path}/portrait_large.${comic.thumbnail.extension}"
         url = url.replace("http", "https")
         Picasso.get().load(url).into(iv_fragment_comics_thumbnail)
     }
