@@ -17,8 +17,8 @@ interface ComicsService {
 
     @GET("comics/{id}")
     fun getComicById(
-        @Query("limit") limit: Int = 100,
         @Path("id") id: Int,
+        @Query("limit") limit: Int = 100,
         @Query("apikey") apikey: String,
         @Query("ts") ts: String,
         @Query("hash") hash: String
