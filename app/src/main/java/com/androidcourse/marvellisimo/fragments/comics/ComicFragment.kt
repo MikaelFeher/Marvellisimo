@@ -1,6 +1,7 @@
 package com.androidcourse.marvellisimo.fragments.comics
 
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -105,7 +106,7 @@ class ComicFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        DataHandler.comic.postValue(null)
-        DataHandler.charactersByComic!!.postValue(null)
+        DataHandler.comic = MutableLiveData()
+        DataHandler.charactersByComic = MutableLiveData()
     }
 }
