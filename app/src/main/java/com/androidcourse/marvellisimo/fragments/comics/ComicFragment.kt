@@ -52,8 +52,8 @@ class ComicFragment : Fragment() {
     }
 
     private fun setComicFragmentImageList(imagesList: List<Image>) {
-        val comicsDetailsImageList = rv_fragment_comics_details_images_list
-        val labelForImagesList = tv_fragment_label_for_rv_comics_details_images_list
+        val comicsDetailsImageList = rv_fragment_comics_details_cover_arts_list
+        val labelForImagesList = tv_fragment_label_for_rv_comics_details_cover_arts_list
 
         if (imagesList.size < 2) labelForImagesList.visibility = View.GONE
         comicsDetailsImageList.adapter = ComicsDetailsImageAdapter(imagesList)

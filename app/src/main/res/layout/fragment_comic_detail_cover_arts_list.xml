@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".fragments.comics.ComicDetailCoverArtsListFragment">
+
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+        // Cover Art...
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:labelFor="@id/rv_fragment_comics_details_characters_list"
+                android:text="Browse covers by swiping..."
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                android:id="@+id/tv_fragment_label_for_rv_comics_details_characters_list"
+                app:layout_constraintBottom_toTopOf="@+id/rv_fragment_comics_details_characters_list"
+                android:layout_marginBottom="8dp"/>
+
+        <android.support.v7.widget.RecyclerView
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="215dp"
+                android:id="@+id/rv_fragment_comics_details_characters_list"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+        <TextView
+                android:text="Cover Art"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:id="@+id/tv_fragment_label_characters"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/tv_fragment_label_for_rv_comics_details_characters_list"
+                android:layout_marginBottom="8dp"/>
+
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>
