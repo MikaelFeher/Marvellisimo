@@ -6,7 +6,6 @@
              xmlns:app="http://schemas.android.com/apk/res-auto"
              tools:context=".fragments.SearchResultFragment">
 
-
     <android.support.v7.widget.RecyclerView
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             android:id="@+id/rv_fragment_search_result"

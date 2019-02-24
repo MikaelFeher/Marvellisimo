@@ -1,6 +1,8 @@
 package com.androidcourse.marvellisimo.fragments
 
 
+import android.arch.lifecycle.Observer
+import android.content.res.Resources
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -22,23 +24,21 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var input = et_search_input
         var rbCharacters = rb_search_type_characters
-        var rbComics = rb_search_type_comics
-        var radioGroup = rg_search_radio_button_group
         var btnSearch = btn_submit
 
         btnSearch.setOnClickListener {
-//            search(input, switch)
+            var isCharacters = rbCharacters.isChecked
+            var context: FragmentHandler = it.context as FragmentHandler
 
-            println("RadioGroup: ${radioGroup.checkedRadioButtonId}")
+            search(input, isCharacters)
 
+//            println("Context: ${it.context}")
 
-//            var context: FragmentHandler = it.context as FragmentHandler
-//            if (switch.isActivated) {
-//                context.setNextFragment(SearchResultFragment.create(true))
-//
-//            } else {
-//                context.setNextFragment(SearchResultFragment.create(false))
-//            }
+            if (isCharacters) {
+                context.setNextFragment(SearchResultFragment.create(true))
+            } else {
+                context.setNextFragment(SearchResultFragment.create(false))
+            }
         }
     }
 
@@ -51,12 +51,13 @@ class HomeFragment : Fragment() {
         return viewItem
     }
 
-//    fun search(input: EditText) {
-//        var inputValue = input.text
-//        if () {
-//            DataHandler.findCharacter(inputValue.toString())
-//        } else {
-//            DataHandler.findComic(inputValue.toString())
-//        }
-//    }
+    fun search(input: EditText, isCharacter: Boolean) {
+        var inputValue = input.text
+        if (isCharacter) {
+            DataHandler.findCharacter(inputValue.toString())
+        } else {
+            DataHandler.findComic(inputValue.toString())
+        }
+        input.text = null
+    }
 }

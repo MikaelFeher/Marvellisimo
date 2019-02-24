@@ -4,6 +4,7 @@ package com.androidcourse.marvellisimo.fragments
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,7 @@ class SearchResultFragment : Fragment() {
         fun create(type: Boolean): SearchResultFragment {
             val fragment = SearchResultFragment()
             val args = Bundle()
-            args.putBoolean("character", type)
+            args.putBoolean("isCharacter", type)
             fragment.arguments = args
             return fragment
         }
@@ -28,11 +29,12 @@ class SearchResultFragment : Fragment() {
 
     private var viewItem: View? = null
     private var isCharacter: Boolean? = null
+    lateinit var searchResultFragment: RecyclerView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        isCharacter = arguments!!.getBoolean("character")
-        var searchResultFragment = viewItem!!.rv_fragment_search_result
+        isCharacter = arguments!!.getBoolean("isCharacter")
+        searchResultFragment = viewItem!!.rv_fragment_search_result
 
         if (isCharacter!!) {
             DataHandler.characterSearchResult!!.observe(this, Observer {
@@ -53,6 +55,5 @@ class SearchResultFragment : Fragment() {
         viewItem = inflater.inflate(R.layout.fragment_search_result, container, false)
         return viewItem
     }
-
 
 }

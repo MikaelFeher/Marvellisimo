@@ -27,7 +27,7 @@ interface ComicsService {
     @GET("comics")
     fun findComicsByName(
         @Query("limit") limit: Int = 100,
-        @Query("nameStartsWith") nameStartsWith: String,
+        @Query("titleStartsWith") titleStartsWith: String,
         @Query("apikey") apikey: String,
         @Query("ts") ts: String,
         @Query("hash") hash: String

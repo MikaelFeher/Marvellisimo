@@ -54,7 +54,7 @@ object ComicsServiceHandler {
 
     fun findComicByName(inputValue: String): Call<ComicsDataWrapper> {
         return SERVICE.findComicsByName(
-                    nameStartsWith = inputValue,
+            titleStartsWith = inputValue,
                     apikey = API_KEY,
                     ts = "1",
                     hash = HASH

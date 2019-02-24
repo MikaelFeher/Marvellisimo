@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.fragments.comics.ComicFragment
-import com.androidcourse.marvellisimo.helpers.CustomItemClickListener
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
 import com.androidcourse.marvellisimo.models.comics.Comics
 import com.squareup.picasso.Picasso
