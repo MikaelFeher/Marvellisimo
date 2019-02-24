@@ -40,7 +40,7 @@ class CharacterFragment : Fragment() {
         characterId = arguments!!.getString("id")
 
         characterId?.let{
-            DataHandler.getCharacter(it)
+            DataHandler.getCharacterById(it)
         }
 
         DataHandler.character.observe(this, Observer {

@@ -4,13 +4,19 @@ package com.androidcourse.marvellisimo.fragments.comics
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 
 import com.androidcourse.marvellisimo.R
+import com.androidcourse.marvellisimo.adapters.character.CharacterListAdapter
 import com.androidcourse.marvellisimo.adapters.comics.ComicsDetailsImageAdapter
+import com.androidcourse.marvellisimo.adapters.comics.ComicsListAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
+import com.androidcourse.marvellisimo.models.comics.Characters
 import com.androidcourse.marvellisimo.models.comics.Comics
 import com.androidcourse.marvellisimo.models.comics.Image
 import com.squareup.picasso.Picasso
@@ -30,28 +36,45 @@ class ComicFragment : Fragment() {
 
     private var viewItem: View? = null
     private var comicId: String? = null
+    private lateinit var progressBar: ProgressBar
+    private lateinit var labelForCharactersList: TextView
+    private lateinit var comicDetailsCharacterList: RecyclerView
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         comicId = arguments!!.getString("id")
+        progressBar = pb_fragment_comic_progressbar
+        labelForCharactersList = tv_fragment_label_for_rv_comics_details_characters_list
+        comicDetailsCharacterList = rv_fragment_comics_details_characters_list
 
         comicId?.let{
-            DataHandler.getComic(it)
+            DataHandler.getComicById(it)
+            DataHandler.findCharacterByComic(it)
         }
 
         DataHandler.comic.observe(this, Observer {
             if (it == null) {
-                pb_fragment_comic_progressbar.visibility = View.VISIBLE
+                progressBar.visibility = View.VISIBLE
             } else {
-                pb_fragment_comic_progressbar.visibility = View.GONE
+                progressBar.visibility = View.GONE
                 setComicsViewFields(it!!)
-                setComicFragmentImageList(it.images)
+                setComicFragmentCoverArtsList(it.images)
+            }
+        })
+
+        DataHandler.charactersByComic!!.observe(this, Observer {
+            if (it.isNullOrEmpty()){
+                labelForCharactersList.visibility = View.VISIBLE
+            } else {
+                labelForCharactersList.visibility = View.GONE
+                comicDetailsCharacterList.adapter = CharacterListAdapter(it)
             }
         })
     }
 
-    private fun setComicFragmentImageList(imagesList: List<Image>) {
+    private fun setComicFragmentCoverArtsList(imagesList: List<Image>) {
         val comicsDetailsImageList = rv_fragment_comics_details_cover_arts_list
         val labelForImagesList = tv_fragment_label_for_rv_comics_details_cover_arts_list
 
@@ -83,5 +106,6 @@ class ComicFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         DataHandler.comic.postValue(null)
+        DataHandler.charactersByComic!!.postValue(null)
     }
 }

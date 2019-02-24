@@ -60,9 +60,18 @@ object CharacterServiceHandler {
     }
 
     // Find characters by name...
-    fun findCharacterByName(name: String) : Call<CharacterDataWrapper>{
-        return SERVICE.findCharacterByName(
+    fun findCharacterByNameStartsWith(name: String) : Call<CharacterDataWrapper>{
+        return SERVICE.findCharacterByNameStartsWith(
             nameStartsWith = name,
+            apikey = API_KEY,
+            ts ="1",
+            hash = HASH
+        )
+    }
+
+    fun findCharacterByComic(comicsId: String) : Call<CharacterDataWrapper> {
+        return SERVICE.findCharacterByComic(
+            comicsId = comicsId,
             apikey = API_KEY,
             ts ="1",
             hash = HASH

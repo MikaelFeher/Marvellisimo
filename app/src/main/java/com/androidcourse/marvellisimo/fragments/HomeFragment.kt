@@ -1,15 +1,12 @@
 package com.androidcourse.marvellisimo.fragments
 
 
-import android.arch.lifecycle.Observer
-import android.content.res.Resources
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Switch
 
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.dto.DataHandler
@@ -54,9 +51,9 @@ class HomeFragment : Fragment() {
     fun search(input: EditText, isCharacter: Boolean) {
         var inputValue = input.text
         if (isCharacter) {
-            DataHandler.findCharacter(inputValue.toString())
+            DataHandler.findCharacterByName(inputValue.toString())
         } else {
-            DataHandler.findComic(inputValue.toString())
+            DataHandler.findComicByName(inputValue.toString())
         }
         input.text = null
     }
