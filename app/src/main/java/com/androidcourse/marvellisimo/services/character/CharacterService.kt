@@ -24,10 +24,19 @@ interface CharacterService {
         @Query("hash") hash: String
     ): Call<CharacterDataWrapper>
 
-    // TODO: Implement something that calls this method...
+    // TODO: This needs renaming to findCharacterByNameStartsWith
     @GET("characters")
-    fun findCharacterByName(
+    fun findCharacterByNameStartsWith(
         @Query("nameStartsWith") nameStartsWith: String,
+        @Query("limit") limit: Int = 100,
+        @Query("apikey") apikey: String,
+        @Query("ts") ts: String,
+        @Query("hash") hash: String
+    ): Call<CharacterDataWrapper>
+
+    @GET("characters")
+    fun findCharacterByComic(
+        @Query("comics") comicsId: String,
         @Query("limit") limit: Int = 100,
         @Query("apikey") apikey: String,
         @Query("ts") ts: String,
