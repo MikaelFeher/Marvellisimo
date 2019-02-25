@@ -33,11 +33,11 @@ class SearchResultFragment : Fragment() {
         }
     }
 
-    private var viewItem: View? = null
     private var isCharacter: Boolean? = null
-    lateinit var searchResultFragment: RecyclerView
-    lateinit var progressBar: ProgressBar
-    lateinit var tvNoContent: TextView
+    private lateinit var viewItem: View
+    private lateinit var searchResultFragment: RecyclerView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var tvNoContent: TextView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
