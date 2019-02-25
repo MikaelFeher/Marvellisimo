@@ -19,6 +19,7 @@ object DataHandler {
     var characterSearchResult: MutableLiveData<List<Character>>? = MutableLiveData()
     var comicSearchResult: MutableLiveData<List<Comics>>? = MutableLiveData()
     var charactersByComic: MutableLiveData<List<Character>>? = MutableLiveData()
+    var comicsByCharacter: MutableLiveData<List<Comics>>? = MutableLiveData()
 
 
     fun initializeData() {
@@ -81,6 +82,18 @@ object DataHandler {
 
             override fun onResponse(call: Call<ComicsDataWrapper>, response: Response<ComicsDataWrapper>) {
                 comicSearchResult!!.postValue(response.body()!!.data.results)
+            }
+
+            override fun onFailure(call: Call<ComicsDataWrapper>, t: Throwable) {
+                t.message
+            }
+        })
+    }
+
+    fun findComicsByCharacter(characterId: String) {
+        ComicsServiceHandler.findComicByCharacter(characterId).enqueue(object : Callback<ComicsDataWrapper> {
+            override fun onResponse(call: Call<ComicsDataWrapper>, response: Response<ComicsDataWrapper>) {
+                comicsByCharacter!!.postValue(response.body()!!.data.results)
             }
 
             override fun onFailure(call: Call<ComicsDataWrapper>, t: Throwable) {

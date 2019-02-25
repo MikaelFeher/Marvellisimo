@@ -35,8 +35,8 @@ class ComicFragment : Fragment() {
         }
     }
 
-    private var viewItem: View? = null
     private var comicId: String? = null
+    private lateinit var viewItem: View
     private lateinit var progressBar: ProgressBar
     private lateinit var labelForCharactersList: TextView
     private lateinit var comicDetailsCharacterList: RecyclerView

@@ -82,7 +82,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/tv_fragment_label_for_rv_characters_details_comics_list"
+                app:layout_constraintBottom_toTopOf="@+id/tv_fragment_label_for_rv_character_details_comics_list"
                 android:layout_marginBottom="8dp"/>
 
         <TextView
@@ -94,15 +94,15 @@
                 android:layout_marginStart="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                android:id="@+id/tv_fragment_label_for_rv_characters_details_comics_list"
-                app:layout_constraintTop_toTopOf="@id/rv_fragment_characters_details_comics_list"
+                android:id="@+id/tv_fragment_label_for_rv_character_details_comics_list"
+                app:layout_constraintTop_toTopOf="@id/rv_fragment_character_details_comics_list"
                 android:textColor="@android:color/black"/>
 
         <android.support.v7.widget.RecyclerView
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/rv_fragment_characters_details_comics_list"
+                android:id="@+id/rv_fragment_character_details_comics_list"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="16dp"

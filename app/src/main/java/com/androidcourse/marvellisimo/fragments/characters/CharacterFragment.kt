@@ -4,10 +4,12 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.dto.DataHandler
@@ -32,16 +34,21 @@ class CharacterFragment : Fragment() {
         }
     }
 
-    private var viewItem: View? = null
     private var characterId: String? = null
+    private lateinit var viewItem: View
+    private lateinit var labelForComicsList: TextView
+    private lateinit var characterDetailsComicsList: RecyclerView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         characterId = arguments!!.getString("id")
+        labelForComicsList = tv_fragment_label_for_rv_character_details_comics_list
+        characterDetailsComicsList = rv_fragment_character_details_comics_list
 
         characterId?.let{
             DataHandler.getCharacterById(it)
+            DataHandler.findComicsByCharacter(it)
         }
 
         DataHandler.character.observe(this, Observer {

@@ -60,4 +60,13 @@ object ComicsServiceHandler {
                     hash = HASH
                 )
     }
+
+    fun findComicByCharacter(characterId: String) : Call<ComicsDataWrapper> {
+        return SERVICE.findComicByCharacter(
+            characterId = characterId,
+            apikey = API_KEY,
+            ts = "1",
+            hash = HASH
+        )
+    }
 }
