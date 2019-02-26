@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 
 import com.androidcourse.marvellisimo.R
+import com.androidcourse.marvellisimo.adapters.comics.ComicsListAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
 import com.androidcourse.marvellisimo.models.character.Character
 import com.squareup.picasso.Picasso
@@ -58,6 +59,14 @@ class CharacterFragment : Fragment() {
                 pb_fragment_character_progressbar.visibility = View.GONE
                 setCharacterViewFields(it!!)
             }
+        })
+
+        DataHandler.comicsByCharacter!!.observe(this, Observer {
+            while (it.isNullOrEmpty()) {
+                labelForComicsList.visibility = View.VISIBLE
+            }
+            labelForComicsList.visibility = View.GONE
+            characterDetailsComicsList.adapter = ComicsListAdapter(it!!)
         })
     }
 
