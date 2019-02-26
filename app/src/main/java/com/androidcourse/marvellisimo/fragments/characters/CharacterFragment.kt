@@ -82,6 +82,7 @@ class CharacterFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         DataHandler.character = MutableLiveData()
+        DataHandler.comicsByCharacter = MutableLiveData()
     }
 
     private fun setCharacterViewFields(character: Character) {
