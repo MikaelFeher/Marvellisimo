@@ -5,6 +5,7 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
 
+@RealmClass("Character")
 open class Character: RealmObject() {
     @PrimaryKey
     var id: Int? = null
