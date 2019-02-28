@@ -13,19 +13,20 @@ import kotlinx.android.synthetic.main.fragment_character_list.*
 import kotlinx.android.synthetic.main.fragment_character_list.view.*
 
 class CharacterListFragment : Fragment() {
-    private var viewItem : View? = null
+    private var viewItem: View? = null
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val characterListFragment = viewItem!!.rv_fragment_character_list
 
         DataHandler.characters!!.observe(this, Observer {
-            if (it == null) {
+            println("charactersList: $it")
+            while (it == null) {
                 pb_fragment_character_list_progressbar.visibility = View.VISIBLE
-            } else {
-                pb_fragment_character_list_progressbar.visibility = View.GONE
-                characterListFragment.adapter = CharacterListAdapter(it!!)
             }
+            pb_fragment_character_list_progressbar.visibility = View.GONE
+            characterListFragment.adapter = CharacterListAdapter(it)
+
         })
     }
 

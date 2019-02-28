@@ -60,7 +60,7 @@ class ComicFragment : Fragment() {
                 progressBar.visibility = View.VISIBLE
             } else {
                 progressBar.visibility = View.GONE
-                setComicsViewFields(it!!)
+                setComicsViewFields(it)
                 setComicFragmentCoverArtsList(it.images)
             }
         })

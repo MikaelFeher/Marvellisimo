@@ -23,11 +23,12 @@ class ComicsListFragment : Fragment() {
         val comicsListFragment = viewItem!!.rv_fragment_comics_list
 
         DataHandler.comics!!.observe(this, Observer {
+            println("comicslist: $it")
             if (it == null) {
                 pb_fragment_comics_list_progressbar.visibility = View.VISIBLE
             } else {
                 pb_fragment_comics_list_progressbar.visibility = View.GONE
-                comicsListFragment.adapter = ComicsListAdapter(it!!)
+                comicsListFragment.adapter = ComicsListAdapter(it)
             }
         })
     }

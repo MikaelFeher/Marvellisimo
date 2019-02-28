@@ -1,6 +1,7 @@
 package com.androidcourse.marvellisimo
 
 import android.app.Application
+import com.androidcourse.marvellisimo.dto.DataHandler
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
@@ -14,5 +15,8 @@ class Marvellisimo: Application() {
             .deleteRealmIfMigrationNeeded()
             .build()
         Realm.setDefaultConfiguration(configuration)
+
+        println("Application onCreate")
+
     }
 }

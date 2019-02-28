@@ -57,7 +57,7 @@ class CharacterFragment : Fragment() {
                 pb_fragment_character_progressbar.visibility = View.VISIBLE
             } else {
                 pb_fragment_character_progressbar.visibility = View.GONE
-                setCharacterViewFields(it!!)
+                setCharacterViewFields(it)
             }
         })
 
@@ -66,7 +66,7 @@ class CharacterFragment : Fragment() {
                 labelForComicsList.visibility = View.VISIBLE
             }
             labelForComicsList.visibility = View.GONE
-            characterDetailsComicsList.adapter = ComicsListAdapter(it!!)
+            characterDetailsComicsList.adapter = ComicsListAdapter(it)
         })
     }
 

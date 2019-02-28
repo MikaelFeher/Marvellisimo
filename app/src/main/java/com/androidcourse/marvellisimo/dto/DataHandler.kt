@@ -81,7 +81,9 @@ object DataHandler {
         ComicsServiceHandler.findComicByName(title).enqueue(object : Callback<ComicsDataWrapper> {
 
             override fun onResponse(call: Call<ComicsDataWrapper>, response: Response<ComicsDataWrapper>) {
-                comicSearchResult!!.postValue(response.body()!!.data.results)
+                if (response.body()!!.data.count == 0) DataHandler.comicSearchResult!!.postValue(null)
+                else DataHandler.comicSearchResult!!.postValue(response.body()!!.data.results)
+//                comicSearchResult!!.postValue(response.body()!!.data.results)
             }
 
             override fun onFailure(call: Call<ComicsDataWrapper>, t: Throwable) {
