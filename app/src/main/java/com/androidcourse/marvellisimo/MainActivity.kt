@@ -31,10 +31,8 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
         setFragment(homeFragment)
         realm = Realm.getDefaultInstance()
 
-
         // Initialize data...
         DataHandler.initializeData()
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

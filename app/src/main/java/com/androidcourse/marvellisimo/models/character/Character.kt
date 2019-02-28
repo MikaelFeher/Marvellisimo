@@ -5,6 +5,21 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
 
+data class Character(
+    val id: Int,
+    val comics: Comics,
+    val description: String,
+    val events: Events,
+    val modified: String,
+    val name: String,
+    val resourceURI: String,
+    val series: Series,
+    val stories: Stories,
+    val thumbnail: Thumbnail,
+    val urls: RealmList<Url>
+)
+
+/*
 @RealmClass("Character")
 open class Character: RealmObject() {
     @PrimaryKey
@@ -19,4 +34,4 @@ open class Character: RealmObject() {
     var stories: Stories? = null
     var thumbnail: Thumbnail? = null
     var urls: RealmList<Url>? = null
-}
+}*/
