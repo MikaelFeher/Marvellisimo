@@ -39,8 +39,8 @@ object CharacterServiceHandler {
             hash = HASH
         ).enqueue(object : Callback<CharacterDataWrapper> {
             override fun onResponse(call: Call<CharacterDataWrapper>, response: Response<CharacterDataWrapper>) {
-                if (response.body()!!.data.count == 0) DataHandler.characters!!.postValue(null)
-                else DataHandler.characters!!.postValue(response.body()!!.data.results)
+                DataHandler.characters!!.postValue(response.body()!!.data.results)
+
             }
             override fun onFailure(call: Call<CharacterDataWrapper>, t: Throwable) {
                 t.message

@@ -20,7 +20,6 @@ class CharacterListFragment : Fragment() {
         val characterListFragment = viewItem!!.rv_fragment_character_list
 
         DataHandler.characters!!.observe(this, Observer {
-            println("charactersList: $it")
             while (it == null) {
                 pb_fragment_character_list_progressbar.visibility = View.VISIBLE
             }

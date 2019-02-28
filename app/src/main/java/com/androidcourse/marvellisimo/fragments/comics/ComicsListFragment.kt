@@ -18,18 +18,17 @@ class ComicsListFragment : Fragment() {
 
     private var viewItem: View? = null
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val comicsListFragment = viewItem!!.rv_fragment_comics_list
 
         DataHandler.comics!!.observe(this, Observer {
-            println("comicslist: $it")
-            if (it == null) {
+            while(it!!.isEmpty()) {
                 pb_fragment_comics_list_progressbar.visibility = View.VISIBLE
-            } else {
-                pb_fragment_comics_list_progressbar.visibility = View.GONE
-                comicsListFragment.adapter = ComicsListAdapter(it)
             }
+            pb_fragment_comics_list_progressbar.visibility = View.GONE
+            comicsListFragment.adapter = ComicsListAdapter(it)
+
         })
     }
 
