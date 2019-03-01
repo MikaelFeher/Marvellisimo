@@ -15,8 +15,11 @@ import android.widget.ToggleButton
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.adapters.comics.ComicsListAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
+import com.androidcourse.marvellisimo.models.Realm.Favourite
 import com.androidcourse.marvellisimo.models.character.Character
+import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_character.*
 
 
@@ -39,6 +42,7 @@ class CharacterFragment : Fragment() {
     private var characterId: String? = null
     private var starEmpty: Int? = null
     private var starFilled: Int? = null
+    private var isFavourite: Boolean = false
     private lateinit var viewItem: View
     private lateinit var labelForComicsList: TextView
     private lateinit var characterDetailsComicsList: RecyclerView
@@ -57,6 +61,7 @@ class CharacterFragment : Fragment() {
         characterId?.let{
             DataHandler.getCharacterById(it)
             DataHandler.findComicsByCharacter(it)
+            isFavourite = checkIfFavourite(it.toInt())
         }
 
         DataHandler.character.observe(this, Observer {
@@ -77,6 +82,11 @@ class CharacterFragment : Fragment() {
         })
     }
 
+    private fun checkIfFavourite(id: Int): Boolean {
+        val favourite: RealmResults<Favourite>? = RealmService.findById(id)
+        return favourite!!.size == 1
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -91,11 +101,17 @@ class CharacterFragment : Fragment() {
         tv_fragment_character_name.text = character.name
         tv_fragment_character_description.text = if (character.description.isNotEmpty()) character.description else "No description available..."
         createImage(character, iv_fragment_character_image)
+        setFavourite(isFavourite)
         favouriteToggle.setOnClickListener {
 
             if (favouriteToggle.isChecked) it.setBackgroundResource(starFilled!!)
             else it.setBackgroundResource(starEmpty!!)
         }
+    }
+
+    private fun setFavourite(isFavourite: Boolean) {
+        if (isFavourite) favouriteToggle.setBackgroundResource(starFilled!!)
+        else favouriteToggle.setBackgroundResource(starEmpty!!)
     }
 
     private fun createImage(character: Character, imageView: ImageView) {
