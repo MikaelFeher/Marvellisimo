@@ -29,8 +29,6 @@ class HomeFragment : Fragment() {
 
             search(input, isCharacters)
 
-//            println("Context: ${it.context}")
-
             if (isCharacters) {
                 context.setNextFragment(SearchResultFragment.create(true))
             } else {

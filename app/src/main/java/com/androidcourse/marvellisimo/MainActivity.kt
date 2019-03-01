@@ -14,6 +14,7 @@ import com.androidcourse.marvellisimo.fragments.HomeFragment
 import com.androidcourse.marvellisimo.fragments.characters.CharacterListFragment
 import com.androidcourse.marvellisimo.fragments.comics.ComicsListFragment
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
+import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), FragmentHandler {
@@ -21,16 +22,17 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
     private var characterListFragment: Fragment = CharacterListFragment()
     private var comicsListFragment: Fragment = ComicsListFragment()
     private var homeFragment: Fragment = HomeFragment()
+    lateinit var realm: Realm
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         setFragment(homeFragment)
+        realm = Realm.getDefaultInstance()
 
         // Initialize data...
         DataHandler.initializeData()
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -69,5 +71,10 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        realm.close()
     }
 }

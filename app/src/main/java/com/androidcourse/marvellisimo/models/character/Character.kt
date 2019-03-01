@@ -1,10 +1,10 @@
 package com.androidcourse.marvellisimo.models.character
 
 data class Character(
+    val id: Int,
     val comics: Comics,
     val description: String,
     val events: Events,
-    val id: Int,
     val modified: String,
     val name: String,
     val resourceURI: String,

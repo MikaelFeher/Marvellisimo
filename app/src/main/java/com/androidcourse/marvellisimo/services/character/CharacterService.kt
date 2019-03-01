@@ -9,7 +9,6 @@ import retrofit2.http.Query
 interface CharacterService {
     @GET("characters")
     fun getAllCharacters(
-        @Query("limit") limit: Int = 100,
         @Query("apikey") apikey: String,
         @Query("ts") ts: String,
         @Query("hash") hash: String
@@ -18,17 +17,14 @@ interface CharacterService {
     @GET("characters/{id}")
     fun getCharacterById(
         @Path("id") id: Int,
-        @Query("limit") limit: Int = 100,
         @Query("apikey") apikey: String,
         @Query("ts") ts: String,
         @Query("hash") hash: String
     ): Call<CharacterDataWrapper>
 
-    // TODO: This needs renaming to findCharacterByNameStartsWith
     @GET("characters")
     fun findCharacterByNameStartsWith(
         @Query("nameStartsWith") nameStartsWith: String,
-        @Query("limit") limit: Int = 100,
         @Query("apikey") apikey: String,
         @Query("ts") ts: String,
         @Query("hash") hash: String
@@ -37,7 +33,6 @@ interface CharacterService {
     @GET("characters")
     fun findCharacterByComic(
         @Query("comics") comicsId: String,
-        @Query("limit") limit: Int = 100,
         @Query("apikey") apikey: String,
         @Query("ts") ts: String,
         @Query("hash") hash: String

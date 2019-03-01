@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.ToggleButton
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.fragments.comics.ComicFragment
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
@@ -30,6 +31,12 @@ class ComicsListAdapter(private val comicsList: List<Comics>) : RecyclerView.Ada
         holder.comicTitle.text = comic.title
         holder.itemView.tag = comic.id
         createImage(comic, holder)
+
+        holder.favouriteToggle.setOnClickListener {
+
+            if (holder.favouriteToggle.isChecked) it.setBackgroundResource(holder.starFilledId)
+            else it.setBackgroundResource(holder.starEmptyId)
+        }
     }
 
     private fun createImage(comic: Comics, holder: CustomViewHolder) {
@@ -44,6 +51,9 @@ class ComicsListAdapter(private val comicsList: List<Comics>) : RecyclerView.Ada
     class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         val comicTitle: TextView = view.tv_comics_list_item_title
         val comicImg: ImageView = view.iv_comics_list_item_Thumbnail
+        val favouriteToggle: ToggleButton = view.tb_comics_list_item_favourite_toggle
+        val starEmptyId: Int = R.drawable.favourite_empty
+        val starFilledId: Int = R.drawable.favourite_filled
 
         init {
             view.setOnClickListener {

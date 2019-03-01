@@ -42,41 +42,36 @@ class SearchResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         isCharacter = arguments!!.getBoolean("isCharacter")
-        searchResultFragment = viewItem!!.rv_fragment_search_result
+        searchResultFragment = viewItem.rv_fragment_search_result
         progressBar = pb_fragment_search_result_progressbar
         tvNoContent = tv_no_content_message
 
         if (isCharacter!!) {
             DataHandler.characterSearchResult!!.observe(this, Observer {
-                while (it.isNullOrEmpty()) {
-                    progressBar.visibility = View.VISIBLE
-                    tvNoContent.visibility = View.GONE
-                    Thread.sleep(10000)
+                if (it == null) {
                     progressBar.visibility = View.GONE
                     tvNoContent.visibility = View.VISIBLE
-                    break
-                }
-                if (!it.isNullOrEmpty()) {
+                } else {
+                    while (it!!.isEmpty() && it != null) {
+                        progressBar.visibility = View.VISIBLE
+                    }
                     progressBar.visibility = View.GONE
                     tvNoContent.visibility = View.GONE
-                    searchResultFragment.adapter = CharacterListAdapter(it!!)
+                    searchResultFragment.adapter = CharacterListAdapter(it)
                 }
             })
         } else {
             DataHandler.comicSearchResult!!.observe(this, Observer {
-
-                while (it.isNullOrEmpty()) {
-                    progressBar.visibility = View.VISIBLE
-                    tvNoContent.visibility = View.GONE
-                    Thread.sleep(10000)
+                if (it == null) {
                     progressBar.visibility = View.GONE
                     tvNoContent.visibility = View.VISIBLE
-                    break
-                }
-                if (!it.isNullOrEmpty()) {
+                } else {
+                    while (it!!.isEmpty() && it != null) {
+                        progressBar.visibility = View.VISIBLE
+                    }
                     progressBar.visibility = View.GONE
                     tvNoContent.visibility = View.GONE
-                    searchResultFragment.adapter = ComicsListAdapter(it!!)
+                    searchResultFragment.adapter = ComicsListAdapter(it)
                 }
             })
         }

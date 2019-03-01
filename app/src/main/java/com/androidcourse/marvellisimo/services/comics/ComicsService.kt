@@ -9,7 +9,6 @@ import retrofit2.http.Query
 interface ComicsService {
     @GET("comics")
     fun getAllComics(
-        @Query("limit") limit: Int = 100,
         @Query("apikey") apikey: String,
         @Query("ts") ts: String,
         @Query("hash") hash: String
@@ -18,7 +17,6 @@ interface ComicsService {
     @GET("comics/{id}")
     fun getComicById(
         @Path("id") id: Int,
-        @Query("limit") limit: Int = 100,
         @Query("apikey") apikey: String,
         @Query("ts") ts: String,
         @Query("hash") hash: String
@@ -26,7 +24,6 @@ interface ComicsService {
 
     @GET("comics")
     fun findComicsByName(
-        @Query("limit") limit: Int = 100,
         @Query("titleStartsWith") titleStartsWith: String,
         @Query("apikey") apikey: String,
         @Query("ts") ts: String,
@@ -35,7 +32,6 @@ interface ComicsService {
 
     @GET("comics")
     fun findComicByCharacter(
-        @Query("limit") limit: Int = 100,
         @Query("characters") characterId: String,
         @Query("apikey") apikey: String,
         @Query("ts") ts: String,

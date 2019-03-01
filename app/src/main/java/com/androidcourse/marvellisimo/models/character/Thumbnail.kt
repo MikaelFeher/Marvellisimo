@@ -1,6 +1,8 @@
 package com.androidcourse.marvellisimo.models.character
 
-data class Thumbnail(
-    val extension: String,
-    val path: String
-)
+import io.realm.RealmObject
+
+open class Thumbnail: RealmObject() {
+    var extension: String? = null
+    var path: String? = null
+}

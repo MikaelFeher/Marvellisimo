@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.ToggleButton
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.fragments.characters.CharacterFragment
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
@@ -32,6 +33,19 @@ class CharacterListAdapter(private val charactersList: List<Character>) :
         holder.name.text = character.name
         holder.itemView.tag = character.id
         createImage(character, holder)
+
+        holder.favouriteToggle.setOnClickListener {
+
+            if (holder.favouriteToggle.isChecked) it.setBackgroundResource(holder.starFilledId)
+            else it.setBackgroundResource(holder.starEmptyId)
+        }
+
+//        holder.favourite.setOnClickListener {
+//
+//            println("Star clicked: ${it.id}")
+//            if (holder.favourite.resources.assets. == holder.starEmptyId) holder.favourite.setImageResource(holder.starFilledId)
+//            else holder.favourite.setImageResource(holder.starEmptyId)
+//        }
     }
 
     private fun createImage(character: Character, holder: CustomViewHolder) {
@@ -44,6 +58,9 @@ class CharacterListAdapter(private val charactersList: List<Character>) :
 
         val name: TextView = view.tvName
         val img: ImageView = view.ivThumbnail
+        val favouriteToggle: ToggleButton = view.tb_character_list_item_favourite_toggle
+        val starEmptyId: Int = R.drawable.favourite_empty
+        val starFilledId: Int = R.drawable.favourite_filled
 
         init {
             view.setOnClickListener{

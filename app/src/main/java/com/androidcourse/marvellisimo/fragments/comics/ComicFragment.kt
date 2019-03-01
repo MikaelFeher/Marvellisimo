@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.ToggleButton
 
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.adapters.character.CharacterListAdapter
@@ -36,10 +37,13 @@ class ComicFragment : Fragment() {
     }
 
     private var comicId: String? = null
+    private var starEmpty: Int? = null
+    private var starFilled: Int? = null
     private lateinit var viewItem: View
     private lateinit var progressBar: ProgressBar
     private lateinit var labelForCharactersList: TextView
     private lateinit var comicDetailsCharacterList: RecyclerView
+    private lateinit var favouriteToggle: ToggleButton
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,8 +53,11 @@ class ComicFragment : Fragment() {
         progressBar = pb_fragment_comic_progressbar
         labelForCharactersList = tv_fragment_label_for_rv_comics_details_characters_list
         comicDetailsCharacterList = rv_fragment_comics_details_characters_list
+        favouriteToggle = tb_comic_fragment_favourite_toggle
+        starEmpty = R.drawable.favourite_empty
+        starFilled = R.drawable.favourite_filled
 
-        comicId?.let{
+        comicId?.let {
             DataHandler.getComicById(it)
             DataHandler.findCharacterByComic(it)
         }
@@ -60,13 +67,13 @@ class ComicFragment : Fragment() {
                 progressBar.visibility = View.VISIBLE
             } else {
                 progressBar.visibility = View.GONE
-                setComicsViewFields(it!!)
+                setComicsViewFields(it)
                 setComicFragmentCoverArtsList(it.images)
             }
         })
 
         DataHandler.charactersByComic!!.observe(this, Observer {
-            if (it.isNullOrEmpty()){
+            if (it.isNullOrEmpty()) {
                 labelForCharactersList.visibility = View.VISIBLE
             } else {
                 labelForCharactersList.visibility = View.GONE
@@ -87,6 +94,12 @@ class ComicFragment : Fragment() {
         tv_fragment_comics_details_title.text = comic.title
         tv_fragment_comics_details_description.text = comic.description ?: "No description available..."
         createImage(comic)
+
+        favouriteToggle.setOnClickListener {
+
+            if (favouriteToggle.isChecked) it.setBackgroundResource(starFilled!!)
+            else it.setBackgroundResource(starEmpty!!)
+        }
     }
 
     private fun createImage(comic: Comics) {
