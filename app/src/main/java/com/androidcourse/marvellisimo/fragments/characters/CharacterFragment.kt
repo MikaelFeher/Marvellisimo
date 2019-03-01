@@ -10,10 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.ToggleButton
 
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.adapters.comics.ComicsListAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
+import com.androidcourse.marvellisimo.models.Favourite
 import com.androidcourse.marvellisimo.models.character.Character
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_character.*
@@ -36,9 +38,12 @@ class CharacterFragment : Fragment() {
     }
 
     private var characterId: String? = null
+    private var starEmpty: Int? = null
+    private var starFilled: Int? = null
     private lateinit var viewItem: View
     private lateinit var labelForComicsList: TextView
     private lateinit var characterDetailsComicsList: RecyclerView
+    private lateinit var favouriteToggle: ToggleButton
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,6 +51,9 @@ class CharacterFragment : Fragment() {
         characterId = arguments!!.getString("id")
         labelForComicsList = tv_fragment_label_for_rv_character_details_comics_list
         characterDetailsComicsList = rv_fragment_character_details_comics_list
+        favouriteToggle = tb_character_fragment_favourite_toggle
+        starEmpty = R.drawable.favourite_empty
+        starFilled = R.drawable.favourite_filled
 
         characterId?.let{
             DataHandler.getCharacterById(it)
@@ -79,16 +87,16 @@ class CharacterFragment : Fragment() {
         return viewItem
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        DataHandler.character = MutableLiveData()
-        DataHandler.comicsByCharacter = MutableLiveData()
-    }
 
     private fun setCharacterViewFields(character: Character) {
         tv_fragment_character_name.text = character.name
         tv_fragment_character_description.text = if (character.description.isNotEmpty()) character.description else "No description available..."
         createImage(character, iv_fragment_character_image)
+        favouriteToggle.setOnClickListener {
+
+            if (favouriteToggle.isChecked) it.setBackgroundResource(starFilled!!)
+            else it.setBackgroundResource(starEmpty!!)
+        }
     }
 
     private fun createImage(character: Character, imageView: ImageView) {
@@ -97,4 +105,9 @@ class CharacterFragment : Fragment() {
         Picasso.get().load(url).into(imageView)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        DataHandler.character = MutableLiveData()
+        DataHandler.comicsByCharacter = MutableLiveData()
+    }
 }

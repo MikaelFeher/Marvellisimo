@@ -18,14 +18,15 @@
                 tools:context=".fragments.characters.CharacterFragment">
 
             <ImageView
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="181dp"
+                    android:layout_height="216dp"
                     android:id="@+id/iv_fragment_character_image"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginTop="32dp"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_fragment_character_name"
+                    android:layout_marginTop="8dp"
                     app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
@@ -37,7 +38,6 @@
                     android:layout_marginStart="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginTop="24dp"
                     app:layout_constraintTop_toBottomOf="@+id/iv_fragment_character_image"
                     android:gravity="center"
                     android:padding="10dp"
@@ -61,8 +61,7 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginBottom="32dp"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_fragment_character_details_label_comics"/>
+                    />
 
             <ProgressBar
                     style="?android:attr/progressBarStyle"
@@ -89,8 +88,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_fragment_label_for_rv_character_details_comics_list"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_fragment_character_description"/>
 
             <TextView
                     android:layout_width="wrap_content"
@@ -113,11 +112,28 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="8dp"
                     app:layout_constraintHorizontal_bias="0.0"
                     android:layout_marginStart="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent">
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_fragment_character_details_label_comics">
             </android.support.v7.widget.RecyclerView>
+
+            <ToggleButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/tb_character_fragment_favourite_toggle"
+                    android:background="@drawable/favourite_empty"
+                    android:textOn=""
+                    android:textOff=""
+                    app:layout_constraintTop_toTopOf="@+id/iv_fragment_character_image"
+                    app:layout_constraintStart_toEndOf="@+id/iv_fragment_character_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_fragment_character_name"
+                    app:layout_constraintVertical_bias="1.0"
+                    android:layout_marginBottom="16dp"/>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
