@@ -3,10 +3,12 @@ package com.androidcourse.marvellisimo.dto
 import android.arch.lifecycle.MutableLiveData
 import com.androidcourse.marvellisimo.dto.character.CharacterDataWrapper
 import com.androidcourse.marvellisimo.dto.comics.ComicsDataWrapper
+import com.androidcourse.marvellisimo.models.Realm.Favourite
 import com.androidcourse.marvellisimo.models.character.Character
 import com.androidcourse.marvellisimo.models.comics.Comics
 import com.androidcourse.marvellisimo.services.character.CharacterServiceHandler
 import com.androidcourse.marvellisimo.services.comics.ComicsServiceHandler
+import io.realm.RealmResults
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,7 +22,7 @@ object DataHandler {
     var comicSearchResult: MutableLiveData<List<Comics>>? = MutableLiveData()
     var charactersByComic: MutableLiveData<List<Character>>? = MutableLiveData()
     var comicsByCharacter: MutableLiveData<List<Comics>>? = MutableLiveData()
-
+    lateinit var favouritesList: RealmResults<Favourite>
 
     fun initializeData() {
         CharacterServiceHandler.getAllCharacters()

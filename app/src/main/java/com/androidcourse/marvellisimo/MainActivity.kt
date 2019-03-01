@@ -1,19 +1,17 @@
 package com.androidcourse.marvellisimo
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.ProgressBar
 import com.androidcourse.marvellisimo.dto.DataHandler
 import com.androidcourse.marvellisimo.fragments.HomeFragment
 import com.androidcourse.marvellisimo.fragments.characters.CharacterListFragment
 import com.androidcourse.marvellisimo.fragments.comics.ComicsListFragment
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
+import com.androidcourse.marvellisimo.services.RealmService
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -29,7 +27,11 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         setFragment(homeFragment)
-        realm = Realm.getDefaultInstance()
+        RealmService.initializeRealm()
+
+        DataHandler.favouritesList = RealmService.getFavorites()
+
+        println("FavouritesList: ${DataHandler.favouritesList}")
 
         // Initialize data...
         DataHandler.initializeData()
@@ -75,6 +77,6 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
 
     override fun onDestroy() {
         super.onDestroy()
-        realm.close()
+        RealmService.killRealm()
     }
 }

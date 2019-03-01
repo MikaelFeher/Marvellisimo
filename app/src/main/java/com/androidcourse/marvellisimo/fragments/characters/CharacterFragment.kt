@@ -15,7 +15,6 @@ import android.widget.ToggleButton
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.adapters.comics.ComicsListAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
-import com.androidcourse.marvellisimo.models.Favourite
 import com.androidcourse.marvellisimo.models.character.Character
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_character.*
