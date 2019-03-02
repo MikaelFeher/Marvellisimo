@@ -12,6 +12,7 @@ import com.androidcourse.marvellisimo.fragments.comics.ComicFragment
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
 import com.androidcourse.marvellisimo.models.Realm.Favourite
 import com.androidcourse.marvellisimo.models.comics.Comics
+import com.androidcourse.marvellisimo.services.FavouriteService
 import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
 import io.realm.RealmResults
@@ -31,47 +32,28 @@ class ComicsListAdapter(private val comicsList: List<Comics>) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val comic = comicsList[position]
-        var isFavourite = checkIfFavourite(comic.id)
+        var isFavourite = FavouriteService.checkIfFavourite(comic.id)
 
         holder.comicTitle.text = comic.title
         holder.itemView.tag = comic.id
         createImage(comic, holder)
 
-        setFavourite(isFavourite, holder)
+        FavouriteService.setFavourite(isFavourite, holder.favouriteToggle)
 
         holder.favouriteToggle.setOnClickListener {
 
             if (isFavourite) {
                 RealmService.removeFavourite(comic.id)
+                FavouriteService.removeFavouriteSnackBar(comic.title, it)
             } else {
-                var newFavourite = createFavorite(comic)
+                var newFavourite = FavouriteService.createFavoriteComic(comic)
                 RealmService.addFavourite(newFavourite)
+                FavouriteService.addFavouriteSnackBar(newFavourite.name!!, it)
             }
 
-            isFavourite = checkIfFavourite(comic.id)
-            setFavourite(isFavourite, holder)
+            isFavourite = FavouriteService.checkIfFavourite(comic.id)
+            FavouriteService.setFavourite(isFavourite, it)
         }
-    }
-
-    private fun createFavorite(comic: Comics) =
-        comic.transformToFavourite(
-            comic.id,
-            comic.title,
-            comic.thumbnail.path!!,
-            comic.thumbnail.extension!!
-        )
-
-    private fun setFavourite(
-        isFavorite: Boolean,
-        holder: CustomViewHolder
-    ) {
-        if (isFavorite) holder.favouriteToggle.setBackgroundResource(holder.starFilled)
-        else holder.favouriteToggle.setBackgroundResource(holder.starEmpty)
-    }
-
-    private fun checkIfFavourite(id: Int): Boolean {
-        val favourite: RealmResults<Favourite>? = RealmService.findById(id)
-        return favourite!!.size == 1
     }
 
     private fun createImage(comic: Comics, holder: CustomViewHolder) {
@@ -87,8 +69,6 @@ class ComicsListAdapter(private val comicsList: List<Comics>) : RecyclerView.Ada
         val comicTitle: TextView = view.tv_comics_list_item_title
         val comicImg: ImageView = view.iv_comics_list_item_Thumbnail
         val favouriteToggle: ToggleButton = view.tb_comics_list_item_favourite_toggle
-        val starEmpty: Int = R.drawable.favourite_empty
-        val starFilled: Int = R.drawable.favourite_filled
 
         init {
             view.setOnClickListener {
