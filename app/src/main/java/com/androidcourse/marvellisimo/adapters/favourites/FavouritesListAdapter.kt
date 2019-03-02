@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.favourites_list_item.view.*
 class FavouritesListAdapter(val favouritesList: RealmResults<Favourite>) :
     RecyclerView.Adapter<FavouritesListAdapter.CustomViewHolder>() {
 
-    val isCharacterList = favouritesList[0]!!.isCharacter
+    private val isCharacterList = if (favouritesList.isNotEmpty()) favouritesList[0]!!.isCharacter else false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -60,7 +60,7 @@ class FavouritesListAdapter(val favouritesList: RealmResults<Favourite>) :
         }
     }
 
-    fun updateFavouritesList() {
+    private fun updateFavouritesList() {
         this.notifyDataSetChanged()
     }
 

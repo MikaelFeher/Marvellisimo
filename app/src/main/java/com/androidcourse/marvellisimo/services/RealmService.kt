@@ -55,4 +55,9 @@ object RealmService {
         return result
     }
 
+    fun getFavoriteComics(): RealmResults<Favourite> {
+        return realm.where<Favourite>()
+            .equalTo("isCharacter", false)
+            .findAll()
+    }
 }

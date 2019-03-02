@@ -11,6 +11,7 @@ import com.androidcourse.marvellisimo.fragments.HomeFragment
 import com.androidcourse.marvellisimo.fragments.characters.CharacterListFragment
 import com.androidcourse.marvellisimo.fragments.comics.ComicsListFragment
 import com.androidcourse.marvellisimo.fragments.favouriteLists.FavouriteCharactersFragment
+import com.androidcourse.marvellisimo.fragments.favouriteLists.FavouriteComicsFragment
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
 import com.androidcourse.marvellisimo.services.RealmService
 import io.realm.Realm
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
     private var comicsListFragment: Fragment = ComicsListFragment()
     private var homeFragment: Fragment = HomeFragment()
     private var favouriteCharacters: Fragment = FavouriteCharactersFragment()
+    private var favouriteComics: Fragment = FavouriteComicsFragment()
     lateinit var realm: Realm
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +63,9 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
             }
             R.id.action_favouriteCharacters -> {
                 return setFragment(favouriteCharacters)
+            }
+            R.id.action_favouriteComics -> {
+                return setFragment(favouriteComics)
             }
             else -> super.onOptionsItemSelected(item)
         }
