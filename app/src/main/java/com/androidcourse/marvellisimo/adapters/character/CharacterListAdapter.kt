@@ -9,7 +9,6 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.fragments.characters.CharacterFragment
-import com.androidcourse.marvellisimo.helpers.FavouriteHandler
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
 import com.androidcourse.marvellisimo.models.Realm.Favourite
 import com.androidcourse.marvellisimo.models.character.Character
@@ -17,7 +16,6 @@ import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.character_list_item.view.*
-
 
 class CharacterListAdapter(private val charactersList: List<Character>) :
     RecyclerView.Adapter<CharacterListAdapter.CustomViewHolder>() {
@@ -34,25 +32,25 @@ class CharacterListAdapter(private val charactersList: List<Character>) :
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val character = charactersList[position]
-        var isFavorite = checkIfFavourite(character.id)
+        var isFavourite = checkIfFavourite(character.id)
 
         holder.name.text = character.name
         holder.itemView.tag = character.id
         createImage(character, holder)
 
-        setFavourite(isFavorite, holder)
+        setFavourite(isFavourite, holder)
 
         holder.favouriteToggle.setOnClickListener {
 
-            if (isFavorite) {
+            if (isFavourite) {
                 RealmService.removeFavourite(character.id)
             } else {
                 var newFavourite = createFavorite(character)
                 RealmService.addFavourite(newFavourite)
             }
 
-            isFavorite = checkIfFavourite(character.id)
-            setFavourite(isFavorite, holder)
+            isFavourite = checkIfFavourite(character.id)
+            setFavourite(isFavourite, holder)
         }
 
     }
@@ -69,8 +67,8 @@ class CharacterListAdapter(private val charactersList: List<Character>) :
         isFavorite: Boolean,
         holder: CustomViewHolder
     ) {
-        if (isFavorite) holder.favouriteToggle.setBackgroundResource(holder.starFilledId)
-        else holder.favouriteToggle.setBackgroundResource(holder.starEmptyId)
+        if (isFavorite) holder.favouriteToggle.setBackgroundResource(holder.starFilled)
+        else holder.favouriteToggle.setBackgroundResource(holder.starEmpty)
     }
 
     private fun checkIfFavourite(id: Int): Boolean {
@@ -89,8 +87,8 @@ class CharacterListAdapter(private val charactersList: List<Character>) :
         val name: TextView = view.tvName
         val img: ImageView = view.ivThumbnail
         val favouriteToggle: ToggleButton = view.tb_character_list_item_favourite_toggle
-        val starEmptyId: Int = R.drawable.favourite_empty
-        val starFilledId: Int = R.drawable.favourite_filled
+        val starEmpty: Int = R.drawable.favourite_empty
+        val starFilled: Int = R.drawable.favourite_filled
 
         init {
             view.setOnClickListener{

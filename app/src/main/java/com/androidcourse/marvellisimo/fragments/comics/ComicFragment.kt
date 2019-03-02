@@ -18,10 +18,13 @@ import com.androidcourse.marvellisimo.adapters.character.CharacterListAdapter
 import com.androidcourse.marvellisimo.adapters.comics.ComicsDetailsImageAdapter
 import com.androidcourse.marvellisimo.adapters.comics.ComicsListAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
+import com.androidcourse.marvellisimo.models.Realm.Favourite
 import com.androidcourse.marvellisimo.models.comics.Characters
 import com.androidcourse.marvellisimo.models.comics.Comics
 import com.androidcourse.marvellisimo.models.comics.Image
+import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_comic.*
 
 class ComicFragment : Fragment() {
@@ -39,6 +42,7 @@ class ComicFragment : Fragment() {
     private var comicId: String? = null
     private var starEmpty: Int? = null
     private var starFilled: Int? = null
+    private var isFavourite: Boolean = false
     private lateinit var viewItem: View
     private lateinit var progressBar: ProgressBar
     private lateinit var labelForCharactersList: TextView
@@ -60,6 +64,7 @@ class ComicFragment : Fragment() {
         comicId?.let {
             DataHandler.getComicById(it)
             DataHandler.findCharacterByComic(it)
+            isFavourite = checkIfFavourite(it.toInt())
         }
 
         DataHandler.comic.observe(this, Observer {
@@ -82,6 +87,11 @@ class ComicFragment : Fragment() {
         })
     }
 
+    private fun checkIfFavourite(id: Int): Boolean {
+        val favourite: RealmResults<Favourite>? = RealmService.findById(id)
+        return favourite!!.size == 1
+    }
+
     private fun setComicFragmentCoverArtsList(imagesList: List<Image>) {
         val comicsDetailsImageList = rv_fragment_comics_details_cover_arts_list
         val labelForImagesList = tv_fragment_label_for_rv_comics_details_cover_arts_list
@@ -94,12 +104,33 @@ class ComicFragment : Fragment() {
         tv_fragment_comics_details_title.text = comic.title
         tv_fragment_comics_details_description.text = comic.description ?: "No description available..."
         createImage(comic)
+        setFavourite(isFavourite)
 
         favouriteToggle.setOnClickListener {
 
-            if (favouriteToggle.isChecked) it.setBackgroundResource(starFilled!!)
-            else it.setBackgroundResource(starEmpty!!)
+            if (isFavourite) {
+                RealmService.removeFavourite(comic.id)
+            } else {
+                var newFavourite = createFavorite(comic)
+                RealmService.addFavourite(newFavourite)
+            }
+
+            isFavourite = checkIfFavourite(comic.id)
+            setFavourite(isFavourite)
         }
+    }
+
+    private fun createFavorite(comic: Comics) =
+        comic.transformToFavourite(
+            comic.id,
+            comic.title,
+            comic.thumbnail.path!!,
+            comic.thumbnail.extension!!
+        )
+
+    private fun setFavourite(isFavourite: Boolean) {
+        if (isFavourite) favouriteToggle.setBackgroundResource(starFilled!!)
+        else favouriteToggle.setBackgroundResource(starEmpty!!)
     }
 
     private fun createImage(comic: Comics) {

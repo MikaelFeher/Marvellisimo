@@ -22,11 +22,6 @@ import com.squareup.picasso.Picasso
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_character.*
 
-
-/**
- * A simple [Fragment] subclass.
- *
- */
 class CharacterFragment : Fragment() {
 
     companion object {
