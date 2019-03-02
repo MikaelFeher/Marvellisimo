@@ -104,10 +104,26 @@ class CharacterFragment : Fragment() {
         setFavourite(isFavourite)
         favouriteToggle.setOnClickListener {
 
-            if (favouriteToggle.isChecked) it.setBackgroundResource(starFilled!!)
-            else it.setBackgroundResource(starEmpty!!)
+            if (isFavourite) {
+                RealmService.removeFavourite(character.id)
+            } else {
+                var newFavourite = createFavorite(character)
+                RealmService.addFavourite(newFavourite)
+            }
+
+            isFavourite = checkIfFavourite(character.id)
+            setFavourite(isFavourite)
+
         }
     }
+
+    private fun createFavorite(character: Character) =
+        character.transformToFavourite(
+            character.id,
+            character.name,
+            character.thumbnail.path!!,
+            character.thumbnail.extension!!
+        )
 
     private fun setFavourite(isFavourite: Boolean) {
         if (isFavourite) favouriteToggle.setBackgroundResource(starFilled!!)
