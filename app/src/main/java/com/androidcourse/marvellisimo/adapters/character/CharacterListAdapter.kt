@@ -42,12 +42,13 @@ class CharacterListAdapter(private val charactersList: List<Character>) :
         holder.favouriteToggle.setOnClickListener {
 
             if (isFavourite) {
+                val tempFavourite = character.transformToFavourite(character.id, character.name, character.thumbnail.path!!, character.thumbnail.extension!!)
                 RealmService.removeFavourite(character.id)
-                FavouriteService.removeFavouriteSnackBar(character.name, it)
+                FavouriteService.removeFavouriteSnackBar(tempFavourite!!, it)
             } else {
                 var newFavourite = FavouriteService.createFavoriteCharacter(character)
                 RealmService.addFavourite(newFavourite)
-                FavouriteService.addFavouriteSnackBar(newFavourite.name!!, it)
+                FavouriteService.addFavouriteSnackBar(newFavourite, it)
             }
 
             isFavourite = FavouriteService.checkIfFavourite(character.id)

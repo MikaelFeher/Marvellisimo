@@ -3,6 +3,7 @@ package com.androidcourse.marvellisimo.services
 import android.support.design.widget.Snackbar
 import android.view.View
 import com.androidcourse.marvellisimo.R
+import com.androidcourse.marvellisimo.helpers.UndoListener
 import com.androidcourse.marvellisimo.models.Realm.Favourite
 import com.androidcourse.marvellisimo.models.character.Character
 import com.androidcourse.marvellisimo.models.comics.Comics
@@ -23,14 +24,14 @@ object FavouriteService {
         return favourite!!.size == 1
     }
 
-    fun removeFavouriteSnackBar(item: String, view: View) {
-        Snackbar.make(view, "$item was removed from favourites", Snackbar.LENGTH_LONG)
-            .setAction("Action", null).show()
+    fun removeFavouriteSnackBar(favourite: Favourite, view: View) {
+        Snackbar.make(view, "${favourite.name} was removed from favourites", Snackbar.LENGTH_LONG)
+            .setAction("Undo", UndoListener(favourite, view)).show()
     }
 
-    fun addFavouriteSnackBar(item: String, view: View) {
-        Snackbar.make(view, "$item was added to favourites", Snackbar.LENGTH_LONG)
-            .setAction("Action", null).show()
+    fun addFavouriteSnackBar(favourite: Favourite, view: View) {
+        Snackbar.make(view, "${favourite.name} was added to favourites", Snackbar.LENGTH_LONG)
+            .show()
     }
 
     fun createFavoriteComic(comic: Comics) =

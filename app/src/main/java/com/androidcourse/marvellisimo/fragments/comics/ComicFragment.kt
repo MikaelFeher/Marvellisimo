@@ -4,7 +4,6 @@ package com.androidcourse.marvellisimo.fragments.comics
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -18,13 +17,11 @@ import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.adapters.character.CharacterListAdapter
 import com.androidcourse.marvellisimo.adapters.comics.ComicsDetailsImageAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
-import com.androidcourse.marvellisimo.models.Realm.Favourite
 import com.androidcourse.marvellisimo.models.comics.Comics
 import com.androidcourse.marvellisimo.models.comics.Image
 import com.androidcourse.marvellisimo.services.FavouriteService
 import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
-import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_comic.*
 
 class ComicFragment : Fragment() {
@@ -100,12 +97,13 @@ class ComicFragment : Fragment() {
         favouriteToggle.setOnClickListener {
 
             if (isFavourite) {
+                val tempFavourite = comic.transformToFavourite(comic.id, comic.title, comic.thumbnail.path!!, comic.thumbnail.extension!!)
                 RealmService.removeFavourite(comic.id)
-                FavouriteService.removeFavouriteSnackBar(comic.title, it)
+                FavouriteService.removeFavouriteSnackBar(tempFavourite!!, it)
             } else {
                 var newFavourite = FavouriteService.createFavoriteComic(comic)
                 RealmService.addFavourite(newFavourite)
-                FavouriteService.addFavouriteSnackBar(newFavourite.name!!, it)
+                FavouriteService.addFavouriteSnackBar(newFavourite, it)
             }
 
             isFavourite = FavouriteService.checkIfFavourite(comic.id)

@@ -15,12 +15,10 @@ import android.widget.ToggleButton
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.adapters.comics.ComicsListAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
-import com.androidcourse.marvellisimo.models.Realm.Favourite
 import com.androidcourse.marvellisimo.models.character.Character
 import com.androidcourse.marvellisimo.services.FavouriteService
 import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
-import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_character.*
 
 class CharacterFragment : Fragment() {
@@ -92,12 +90,13 @@ class CharacterFragment : Fragment() {
         favouriteToggle.setOnClickListener {
 
             if (isFavourite) {
+                val tempFavourite = character.transformToFavourite(character.id, character.name, character.thumbnail.path!!, character.thumbnail.extension!!)
                 RealmService.removeFavourite(character.id)
-                FavouriteService.removeFavouriteSnackBar(character.name, it)
+                FavouriteService.removeFavouriteSnackBar(tempFavourite!!, it)
             } else {
                 var newFavourite = FavouriteService.createFavoriteCharacter(character)
                 RealmService.addFavourite(newFavourite)
-                FavouriteService.addFavouriteSnackBar(newFavourite.name!!, it)
+                FavouriteService.addFavouriteSnackBar(newFavourite, it)
             }
 
             isFavourite = FavouriteService.checkIfFavourite(character.id)

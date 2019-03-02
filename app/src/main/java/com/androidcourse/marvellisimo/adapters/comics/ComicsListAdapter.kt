@@ -10,12 +10,10 @@ import android.widget.ToggleButton
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.fragments.comics.ComicFragment
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
-import com.androidcourse.marvellisimo.models.Realm.Favourite
 import com.androidcourse.marvellisimo.models.comics.Comics
 import com.androidcourse.marvellisimo.services.FavouriteService
 import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
-import io.realm.RealmResults
 import kotlinx.android.synthetic.main.comics_list_item.view.*
 
 class ComicsListAdapter(private val comicsList: List<Comics>) : RecyclerView.Adapter<ComicsListAdapter.CustomViewHolder>() {
@@ -43,12 +41,13 @@ class ComicsListAdapter(private val comicsList: List<Comics>) : RecyclerView.Ada
         holder.favouriteToggle.setOnClickListener {
 
             if (isFavourite) {
+                val tempFavourite = comic.transformToFavourite(comic.id, comic.title, comic.thumbnail.path!!, comic.thumbnail.extension!!)
                 RealmService.removeFavourite(comic.id)
-                FavouriteService.removeFavouriteSnackBar(comic.title, it)
+                FavouriteService.removeFavouriteSnackBar(tempFavourite!!, it)
             } else {
                 var newFavourite = FavouriteService.createFavoriteComic(comic)
                 RealmService.addFavourite(newFavourite)
-                FavouriteService.addFavouriteSnackBar(newFavourite.name!!, it)
+                FavouriteService.addFavouriteSnackBar(newFavourite, it)
             }
 
             isFavourite = FavouriteService.checkIfFavourite(comic.id)
