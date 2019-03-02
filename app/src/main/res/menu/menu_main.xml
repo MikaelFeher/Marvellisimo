@@ -17,4 +17,9 @@
           android:title="@string/action_comics"
           android:orderInCategory="100"
           app:showAsAction="never"/>
+
+    <item android:id="@+id/action_favouriteCharacters"
+          android:title="@string/action_favouriteCharacters"
+          android:orderInCategory="100"
+          app:showAsAction="never"/>
 </menu>

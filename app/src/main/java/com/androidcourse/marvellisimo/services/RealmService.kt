@@ -22,6 +22,12 @@ object RealmService {
         return realm.where<Favourite>().findAll()
     }
 
+    fun getFavoriteCharacters(): RealmResults<Favourite>{
+        return realm.where<Favourite>()
+            .equalTo("isCharacter", true)
+            .findAll()
+    }
+
     fun addFavourite(favourite: Favourite) {
         realm.beginTransaction()
         realm.insertOrUpdate(favourite)
