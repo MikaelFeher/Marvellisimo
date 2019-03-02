@@ -17,6 +17,7 @@ import com.androidcourse.marvellisimo.adapters.comics.ComicsListAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
 import com.androidcourse.marvellisimo.models.Realm.Favourite
 import com.androidcourse.marvellisimo.models.character.Character
+import com.androidcourse.marvellisimo.services.FavouriteService
 import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
 import io.realm.RealmResults
@@ -35,8 +36,6 @@ class CharacterFragment : Fragment() {
     }
 
     private var characterId: String? = null
-    private var starEmpty: Int? = null
-    private var starFilled: Int? = null
     private var isFavourite: Boolean = false
     private lateinit var viewItem: View
     private lateinit var labelForComicsList: TextView
@@ -50,13 +49,11 @@ class CharacterFragment : Fragment() {
         labelForComicsList = tv_fragment_label_for_rv_character_details_comics_list
         characterDetailsComicsList = rv_fragment_character_details_comics_list
         favouriteToggle = tb_character_fragment_favourite_toggle
-        starEmpty = R.drawable.favourite_empty
-        starFilled = R.drawable.favourite_filled
 
         characterId?.let{
             DataHandler.getCharacterById(it)
             DataHandler.findComicsByCharacter(it)
-            isFavourite = checkIfFavourite(it.toInt())
+            isFavourite = FavouriteService.checkIfFavourite(it.toInt())
         }
 
         DataHandler.character.observe(this, Observer {
@@ -77,11 +74,6 @@ class CharacterFragment : Fragment() {
         })
     }
 
-    private fun checkIfFavourite(id: Int): Boolean {
-        val favourite: RealmResults<Favourite>? = RealmService.findById(id)
-        return favourite!!.size == 1
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -91,38 +83,26 @@ class CharacterFragment : Fragment() {
         return viewItem
     }
 
-
     private fun setCharacterViewFields(character: Character) {
         tv_fragment_character_name.text = character.name
         tv_fragment_character_description.text = if (character.description.isNotEmpty()) character.description else "No description available..."
         createImage(character, iv_fragment_character_image)
-        setFavourite(isFavourite)
+        FavouriteService.setFavourite(isFavourite, favouriteToggle)
+
         favouriteToggle.setOnClickListener {
 
             if (isFavourite) {
                 RealmService.removeFavourite(character.id)
+                FavouriteService.removeFavouriteSnackBar(character.name, it)
             } else {
-                var newFavourite = createFavorite(character)
+                var newFavourite = FavouriteService.createFavoriteCharacter(character)
                 RealmService.addFavourite(newFavourite)
+                FavouriteService.addFavouriteSnackBar(newFavourite.name!!, it)
             }
 
-            isFavourite = checkIfFavourite(character.id)
-            setFavourite(isFavourite)
-
+            isFavourite = FavouriteService.checkIfFavourite(character.id)
+            FavouriteService.setFavourite(isFavourite, it)
         }
-    }
-
-    private fun createFavorite(character: Character) =
-        character.transformToFavourite(
-            character.id,
-            character.name,
-            character.thumbnail.path!!,
-            character.thumbnail.extension!!
-        )
-
-    private fun setFavourite(isFavourite: Boolean) {
-        if (isFavourite) favouriteToggle.setBackgroundResource(starFilled!!)
-        else favouriteToggle.setBackgroundResource(starEmpty!!)
     }
 
     private fun createImage(character: Character, imageView: ImageView) {

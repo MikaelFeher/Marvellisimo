@@ -45,7 +45,7 @@ data class Comics(
         }
         newFavorite.apply {
             this.id = id
-            this.isCharacter = true
+            this.isCharacter = false
             this.name = name
             this.image = newImage
         }
