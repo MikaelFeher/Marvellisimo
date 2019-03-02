@@ -10,11 +10,10 @@ import android.widget.ToggleButton
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.fragments.characters.CharacterFragment
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
-import com.androidcourse.marvellisimo.models.Realm.Favourite
 import com.androidcourse.marvellisimo.models.character.Character
+import com.androidcourse.marvellisimo.services.FavouriteService
 import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
-import io.realm.RealmResults
 import kotlinx.android.synthetic.main.character_list_item.view.*
 
 class CharacterListAdapter(private val charactersList: List<Character>) :
@@ -32,48 +31,28 @@ class CharacterListAdapter(private val charactersList: List<Character>) :
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val character = charactersList[position]
-        var isFavourite = checkIfFavourite(character.id)
+        var isFavourite = FavouriteService.checkIfFavourite(character.id)
 
         holder.name.text = character.name
         holder.itemView.tag = character.id
         createImage(character, holder)
 
-        setFavourite(isFavourite, holder)
+        FavouriteService.setFavourite(isFavourite, holder.favouriteToggle)
 
         holder.favouriteToggle.setOnClickListener {
 
             if (isFavourite) {
                 RealmService.removeFavourite(character.id)
+                FavouriteService.removeFavouriteSnackBar(character.name, it)
             } else {
-                var newFavourite = createFavorite(character)
+                var newFavourite = FavouriteService.createFavoriteCharacter(character)
                 RealmService.addFavourite(newFavourite)
+                FavouriteService.addFavouriteSnackBar(newFavourite.name!!, it)
             }
 
-            isFavourite = checkIfFavourite(character.id)
-            setFavourite(isFavourite, holder)
+            isFavourite = FavouriteService.checkIfFavourite(character.id)
+            FavouriteService.setFavourite(isFavourite, it)
         }
-
-    }
-
-    private fun createFavorite(character: Character) =
-        character.transformToFavourite(
-            character.id,
-            character.name,
-            character.thumbnail.path!!,
-            character.thumbnail.extension!!
-        )
-
-    private fun setFavourite(
-        isFavorite: Boolean,
-        holder: CustomViewHolder
-    ) {
-        if (isFavorite) holder.favouriteToggle.setBackgroundResource(holder.starFilled)
-        else holder.favouriteToggle.setBackgroundResource(holder.starEmpty)
-    }
-
-    private fun checkIfFavourite(id: Int): Boolean {
-        val favourite: RealmResults<Favourite>? = RealmService.findById(id)
-        return favourite!!.size == 1
     }
 
     private fun createImage(character: Character, holder: CustomViewHolder) {
@@ -87,8 +66,6 @@ class CharacterListAdapter(private val charactersList: List<Character>) :
         val name: TextView = view.tvName
         val img: ImageView = view.ivThumbnail
         val favouriteToggle: ToggleButton = view.tb_character_list_item_favourite_toggle
-        val starEmpty: Int = R.drawable.favourite_empty
-        val starFilled: Int = R.drawable.favourite_filled
 
         init {
             view.setOnClickListener{
@@ -102,8 +79,6 @@ class CharacterListAdapter(private val charactersList: List<Character>) :
 
         override fun onClick(p0: View?) {
         }
-
-
     }
 }
 

@@ -4,6 +4,7 @@ import android.support.design.widget.Snackbar
 import android.view.View
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.models.Realm.Favourite
+import com.androidcourse.marvellisimo.models.character.Character
 import com.androidcourse.marvellisimo.models.comics.Comics
 import io.realm.RealmResults
 
@@ -38,5 +39,13 @@ object FavouriteService {
             comic.title,
             comic.thumbnail.path!!,
             comic.thumbnail.extension!!
+        )
+
+    fun createFavoriteCharacter(character: Character) =
+        character.transformToFavourite(
+            character.id,
+            character.name,
+            character.thumbnail.path!!,
+            character.thumbnail.extension!!
         )
 }
