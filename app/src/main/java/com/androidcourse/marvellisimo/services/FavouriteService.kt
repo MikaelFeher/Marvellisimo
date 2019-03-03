@@ -1,5 +1,6 @@
 package com.androidcourse.marvellisimo.services
 
+import android.app.Activity
 import android.support.design.widget.Snackbar
 import android.view.View
 import com.androidcourse.marvellisimo.R
@@ -25,8 +26,12 @@ object FavouriteService {
         return favourite!!.size == 1
     }
 
-    fun removeFavouriteSnackBar(favourite: Favourite, view: View, adapter: FavouritesListAdapter? = null) {
-        Snackbar.make(view, "${favourite.name} was removed from favourites", Snackbar.LENGTH_LONG)
+    fun removeFavouriteSnackBar(
+        favourite: Favourite,
+        view: View?,
+        adapter: FavouritesListAdapter? = null
+    ) {
+        Snackbar.make(view!!, "${favourite.name} was removed from favourites", Snackbar.LENGTH_LONG)
             .setAction("Undo", UndoListener(favourite, view, adapter)).show()
     }
 

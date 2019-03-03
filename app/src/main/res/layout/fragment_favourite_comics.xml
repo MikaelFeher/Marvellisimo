@@ -15,8 +15,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_fragment_favourite_comics_no_content"
-                tools:layout_editor_absoluteY="67dp"
-                tools:layout_editor_absoluteX="4dp"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                android:textColor="@android:color/black"/>
 
         <android.support.v7.widget.RecyclerView
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"

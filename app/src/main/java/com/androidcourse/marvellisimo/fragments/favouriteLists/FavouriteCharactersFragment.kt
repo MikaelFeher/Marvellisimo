@@ -1,12 +1,10 @@
 package com.androidcourse.marvellisimo.fragments.favouriteLists
 
-
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.adapters.favourites.FavouritesListAdapter
 import com.androidcourse.marvellisimo.services.RealmService
@@ -18,9 +16,17 @@ class FavouriteCharactersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val favouriteCharactersFragment = viewItem!!.rv_fragment_favourite_characters
+        val noContent = viewItem!!.tv_fragment_favourite_characters_no_content
 
         val favouriteCharacters = RealmService.getFavoriteCharacters()
-        favouriteCharactersFragment.adapter = FavouritesListAdapter(favouriteCharacters)
+
+        if (favouriteCharacters.isEmpty()) {
+            noContent.visibility = View.VISIBLE
+        } else {
+            noContent.visibility = View.GONE
+            favouriteCharactersFragment.adapter = FavouritesListAdapter(favouriteCharacters, true)
+        }
+
     }
 
     override fun onCreateView(

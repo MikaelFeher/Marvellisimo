@@ -1,6 +1,5 @@
 package com.androidcourse.marvellisimo.services
 
-import com.androidcourse.marvellisimo.dto.DataHandler
 import com.androidcourse.marvellisimo.models.Realm.Favourite
 import io.realm.Realm
 import io.realm.RealmResults
@@ -41,7 +40,6 @@ object RealmService {
                 .findAll()
                 .deleteAllFromRealm()
         realm.commitTransaction()
-        println("FavouritesList: ${DataHandler.favouritesList}")
     }
 
     fun findById(id: Int): RealmResults<Favourite>{
@@ -50,8 +48,6 @@ object RealmService {
                         .equalTo("id", id)
                         .findAll()
         realm.commitTransaction()
-        println("result: $result")
-        println("FavouritesList: ${DataHandler.favouritesList}")
         return result
     }
 

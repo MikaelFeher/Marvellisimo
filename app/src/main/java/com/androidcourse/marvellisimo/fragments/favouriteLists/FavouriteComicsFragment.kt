@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.adapters.favourites.FavouritesListAdapter
+import com.androidcourse.marvellisimo.models.Realm.Favourite
 import com.androidcourse.marvellisimo.services.RealmService
+import io.realm.RealmChangeListener
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_favourite_comics.*
 import kotlinx.android.synthetic.main.fragment_favourite_comics.view.*
 
@@ -24,9 +27,10 @@ class FavouriteComicsFragment : Fragment() {
             noContentMsg.visibility = View.VISIBLE
         } else {
             noContentMsg.visibility = View.GONE
-            favouriteComicsFragment.adapter = FavouritesListAdapter(favouriteComics)
+            favouriteComicsFragment.adapter = FavouritesListAdapter(favouriteComics, false)
         }
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

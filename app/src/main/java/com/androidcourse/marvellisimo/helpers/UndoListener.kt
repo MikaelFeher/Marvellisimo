@@ -7,7 +7,11 @@ import com.androidcourse.marvellisimo.models.Realm.Favourite
 import com.androidcourse.marvellisimo.services.FavouriteService
 import com.androidcourse.marvellisimo.services.RealmService
 
-class UndoListener(val favourite: Favourite, private val itemView: View?, private val adapter: FavouritesListAdapter? = null): View.OnClickListener {
+class UndoListener(
+    val favourite: Favourite,
+    private val itemView: View?,
+    private val adapter: FavouritesListAdapter? = null
+): View.OnClickListener {
 
     override fun onClick(view: View?) {
         RealmService.addFavourite(favourite)
