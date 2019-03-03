@@ -16,11 +16,11 @@ import android.widget.ToggleButton
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.adapters.character.CharacterListAdapter
 import com.androidcourse.marvellisimo.adapters.comics.ComicsDetailsImageAdapter
-import com.androidcourse.marvellisimo.adapters.comics.ComicsListAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
-import com.androidcourse.marvellisimo.models.comics.Characters
 import com.androidcourse.marvellisimo.models.comics.Comics
 import com.androidcourse.marvellisimo.models.comics.Image
+import com.androidcourse.marvellisimo.services.FavouriteService
+import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_comic.*
 
@@ -37,8 +37,7 @@ class ComicFragment : Fragment() {
     }
 
     private var comicId: String? = null
-    private var starEmpty: Int? = null
-    private var starFilled: Int? = null
+    private var isFavourite: Boolean = false
     private lateinit var viewItem: View
     private lateinit var progressBar: ProgressBar
     private lateinit var labelForCharactersList: TextView
@@ -54,12 +53,11 @@ class ComicFragment : Fragment() {
         labelForCharactersList = tv_fragment_label_for_rv_comics_details_characters_list
         comicDetailsCharacterList = rv_fragment_comics_details_characters_list
         favouriteToggle = tb_comic_fragment_favourite_toggle
-        starEmpty = R.drawable.favourite_empty
-        starFilled = R.drawable.favourite_filled
 
         comicId?.let {
             DataHandler.getComicById(it)
             DataHandler.findCharacterByComic(it)
+            isFavourite = FavouriteService.checkIfFavourite(it.toInt())
         }
 
         DataHandler.comic.observe(this, Observer {
@@ -94,11 +92,22 @@ class ComicFragment : Fragment() {
         tv_fragment_comics_details_title.text = comic.title
         tv_fragment_comics_details_description.text = comic.description ?: "No description available..."
         createImage(comic)
+        FavouriteService.setFavourite(isFavourite, favouriteToggle)
 
         favouriteToggle.setOnClickListener {
 
-            if (favouriteToggle.isChecked) it.setBackgroundResource(starFilled!!)
-            else it.setBackgroundResource(starEmpty!!)
+            if (isFavourite) {
+                val tempFavourite = comic.transformToFavourite(comic.id, comic.title, comic.thumbnail.path!!, comic.thumbnail.extension!!)
+                RealmService.removeFavourite(comic.id)
+                FavouriteService.removeFavouriteSnackBar(tempFavourite!!, it)
+            } else {
+                var newFavourite = FavouriteService.createFavoriteComic(comic)
+                RealmService.addFavourite(newFavourite)
+                FavouriteService.addFavouriteSnackBar(newFavourite, it)
+            }
+
+            isFavourite = FavouriteService.checkIfFavourite(comic.id)
+            FavouriteService.setFavourite(isFavourite, it)
         }
     }
 

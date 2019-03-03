@@ -11,9 +11,10 @@ import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.fragments.characters.CharacterFragment
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
 import com.androidcourse.marvellisimo.models.character.Character
+import com.androidcourse.marvellisimo.services.FavouriteService
+import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.character_list_item.view.*
-
 
 class CharacterListAdapter(private val charactersList: List<Character>) :
     RecyclerView.Adapter<CharacterListAdapter.CustomViewHolder>() {
@@ -30,22 +31,29 @@ class CharacterListAdapter(private val charactersList: List<Character>) :
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val character = charactersList[position]
+        var isFavourite = FavouriteService.checkIfFavourite(character.id)
+
         holder.name.text = character.name
         holder.itemView.tag = character.id
         createImage(character, holder)
 
+        FavouriteService.setFavourite(isFavourite, holder.favouriteToggle)
+
         holder.favouriteToggle.setOnClickListener {
 
-            if (holder.favouriteToggle.isChecked) it.setBackgroundResource(holder.starFilledId)
-            else it.setBackgroundResource(holder.starEmptyId)
-        }
+            if (isFavourite) {
+                val tempFavourite = character.transformToFavourite(character.id, character.name, character.thumbnail.path!!, character.thumbnail.extension!!)
+                RealmService.removeFavourite(character.id)
+                FavouriteService.removeFavouriteSnackBar(tempFavourite!!, it)
+            } else {
+                var newFavourite = FavouriteService.createFavoriteCharacter(character)
+                RealmService.addFavourite(newFavourite)
+                FavouriteService.addFavouriteSnackBar(newFavourite, it)
+            }
 
-//        holder.favourite.setOnClickListener {
-//
-//            println("Star clicked: ${it.id}")
-//            if (holder.favourite.resources.assets. == holder.starEmptyId) holder.favourite.setImageResource(holder.starFilledId)
-//            else holder.favourite.setImageResource(holder.starEmptyId)
-//        }
+            isFavourite = FavouriteService.checkIfFavourite(character.id)
+            FavouriteService.setFavourite(isFavourite, it)
+        }
     }
 
     private fun createImage(character: Character, holder: CustomViewHolder) {
@@ -59,8 +67,6 @@ class CharacterListAdapter(private val charactersList: List<Character>) :
         val name: TextView = view.tvName
         val img: ImageView = view.ivThumbnail
         val favouriteToggle: ToggleButton = view.tb_character_list_item_favourite_toggle
-        val starEmptyId: Int = R.drawable.favourite_empty
-        val starFilledId: Int = R.drawable.favourite_filled
 
         init {
             view.setOnClickListener{
@@ -74,8 +80,6 @@ class CharacterListAdapter(private val charactersList: List<Character>) :
 
         override fun onClick(p0: View?) {
         }
-
-
     }
 }
 

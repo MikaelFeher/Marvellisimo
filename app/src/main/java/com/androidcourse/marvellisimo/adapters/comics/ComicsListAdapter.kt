@@ -11,6 +11,8 @@ import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.fragments.comics.ComicFragment
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
 import com.androidcourse.marvellisimo.models.comics.Comics
+import com.androidcourse.marvellisimo.services.FavouriteService
+import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.comics_list_item.view.*
 
@@ -28,14 +30,28 @@ class ComicsListAdapter(private val comicsList: List<Comics>) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val comic = comicsList[position]
+        var isFavourite = FavouriteService.checkIfFavourite(comic.id)
+
         holder.comicTitle.text = comic.title
         holder.itemView.tag = comic.id
         createImage(comic, holder)
 
+        FavouriteService.setFavourite(isFavourite, holder.favouriteToggle)
+
         holder.favouriteToggle.setOnClickListener {
 
-            if (holder.favouriteToggle.isChecked) it.setBackgroundResource(holder.starFilledId)
-            else it.setBackgroundResource(holder.starEmptyId)
+            if (isFavourite) {
+                val tempFavourite = comic.transformToFavourite(comic.id, comic.title, comic.thumbnail.path!!, comic.thumbnail.extension!!)
+                RealmService.removeFavourite(comic.id)
+                FavouriteService.removeFavouriteSnackBar(tempFavourite!!, it)
+            } else {
+                var newFavourite = FavouriteService.createFavoriteComic(comic)
+                RealmService.addFavourite(newFavourite)
+                FavouriteService.addFavouriteSnackBar(newFavourite, it)
+            }
+
+            isFavourite = FavouriteService.checkIfFavourite(comic.id)
+            FavouriteService.setFavourite(isFavourite, it)
         }
     }
 
@@ -52,8 +68,6 @@ class ComicsListAdapter(private val comicsList: List<Comics>) : RecyclerView.Ada
         val comicTitle: TextView = view.tv_comics_list_item_title
         val comicImg: ImageView = view.iv_comics_list_item_Thumbnail
         val favouriteToggle: ToggleButton = view.tb_comics_list_item_favourite_toggle
-        val starEmptyId: Int = R.drawable.favourite_empty
-        val starFilledId: Int = R.drawable.favourite_filled
 
         init {
             view.setOnClickListener {
