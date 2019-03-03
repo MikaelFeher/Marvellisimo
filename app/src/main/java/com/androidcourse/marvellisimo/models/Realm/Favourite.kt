@@ -1,6 +1,5 @@
 package com.androidcourse.marvellisimo.models.Realm
 
-import com.androidcourse.marvellisimo.models.character.Thumbnail
 import io.realm.RealmObject
 
 open class Favourite: RealmObject() {

@@ -37,4 +37,12 @@ interface CharacterService {
         @Query("ts") ts: String,
         @Query("hash") hash: String
     ): Call<CharacterDataWrapper>
+
+    @GET("characters")
+    fun getMoreCharacters(
+        @Query("offset") offset: Int,
+        @Query("apikey") apikey: String,
+        @Query("ts") ts: String,
+        @Query("hash") hash: String
+    ): Call<CharacterDataWrapper>
 }

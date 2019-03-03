@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
 
         DataHandler.favouritesList = RealmService.getFavorites()
 
-        println("FavouritesList: ${DataHandler.favouritesList}")
-
         // Initialize data...
         DataHandler.initializeData()
     }

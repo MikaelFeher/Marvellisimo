@@ -15,8 +15,5 @@ class Marvellisimo: Application() {
             .deleteRealmIfMigrationNeeded()
             .build()
         Realm.setDefaultConfiguration(configuration)
-
-        println("Application onCreate")
-
     }
 }

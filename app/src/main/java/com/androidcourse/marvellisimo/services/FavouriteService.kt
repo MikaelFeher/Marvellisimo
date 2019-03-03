@@ -1,6 +1,5 @@
 package com.androidcourse.marvellisimo.services
 
-import android.app.Activity
 import android.support.design.widget.Snackbar
 import android.view.View
 import com.androidcourse.marvellisimo.R

@@ -14,9 +14,9 @@ class UndoListener(
 ): View.OnClickListener {
 
     override fun onClick(view: View?) {
-        RealmService.addFavourite(favourite)
+        RealmService.addFavourite(favourite, itemView!!.context)
         FavouriteService.setFavourite(true, itemView!!)
-        adapter!!.notifyDataSetChanged()
+//        adapter!!.notifyDataSetChanged()
         Snackbar.make(view!!, "${favourite.name} is still a favourite", Snackbar.LENGTH_LONG)
             .show()
     }

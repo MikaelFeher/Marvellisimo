@@ -26,7 +26,6 @@ class FavouriteCharactersFragment : Fragment() {
             noContent.visibility = View.GONE
             favouriteCharactersFragment.adapter = FavouritesListAdapter(favouriteCharacters, true)
         }
-
     }
 
     override fun onCreateView(
@@ -37,6 +36,4 @@ class FavouriteCharactersFragment : Fragment() {
         viewItem = inflater.inflate(R.layout.fragment_favourite_characters, container, false)
         return viewItem
     }
-
-
 }
