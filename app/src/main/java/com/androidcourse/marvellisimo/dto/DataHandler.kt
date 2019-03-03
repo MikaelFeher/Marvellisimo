@@ -14,7 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 object DataHandler {
-    var characters: MutableLiveData<List<Character>>? = MutableLiveData()
+    var characters: MutableLiveData<List<Character>> = MutableLiveData()
     var comics: MutableLiveData<List<Comics>>? = MutableLiveData()
     var character: MutableLiveData<Character> = MutableLiveData()
     var comic: MutableLiveData<Comics> = MutableLiveData()
@@ -23,10 +23,40 @@ object DataHandler {
     var charactersByComic: MutableLiveData<List<Character>>? = MutableLiveData()
     var comicsByCharacter: MutableLiveData<List<Comics>>? = MutableLiveData()
     lateinit var favouritesList: RealmResults<Favourite>
+    var characterTotal = 40
+    var characterOffset = 20
 
     fun initializeData() {
         CharacterServiceHandler.getAllCharacters()
         ComicsServiceHandler.getAllComics()
+    }
+
+    fun getMoreCharacters() {
+
+        CharacterServiceHandler.getMoreCharacters(offset = characterOffset)
+            .enqueue(object : Callback<CharacterDataWrapper> {
+                override fun onResponse(call: Call<CharacterDataWrapper>, response: Response<CharacterDataWrapper>) {
+                    characterTotal = if (characterTotal == 40) response.body()!!.data.total else characterTotal
+
+                    val result = response.body()!!.data.results
+                    println("result: ${result[0].name}")
+                    var newList = ArrayList<Character>()
+                    newList.addAll(result)
+                    newList.addAll(characters.value!!)
+                    var newLIstSorted = newList.sortedBy { it.name }
+                    var filteredLIst =
+                        newLIstSorted.filterIndexed { index, it -> if (index + 1 <= newLIstSorted.size - 1) it.name != newLIstSorted[index + 1].name else false }
+
+                    characters.postValue(filteredLIst)
+
+                    println("characters: ${characters.value!!.size}")
+                }
+
+                override fun onFailure(call: Call<CharacterDataWrapper>, t: Throwable) {
+                    t.message
+                }
+            })
+        characterOffset += 20
     }
 
     fun getCharacterById(characterId: String) {
@@ -86,7 +116,6 @@ object DataHandler {
             override fun onResponse(call: Call<ComicsDataWrapper>, response: Response<ComicsDataWrapper>) {
                 if (response.body()!!.data.count == 0) DataHandler.comicSearchResult!!.postValue(null)
                 else DataHandler.comicSearchResult!!.postValue(response.body()!!.data.results)
-//                comicSearchResult!!.postValue(response.body()!!.data.results)
             }
 
             override fun onFailure(call: Call<ComicsDataWrapper>, t: Throwable) {

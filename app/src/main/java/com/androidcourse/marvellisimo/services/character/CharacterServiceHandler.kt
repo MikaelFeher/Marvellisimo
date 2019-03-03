@@ -1,8 +1,12 @@
 package com.androidcourse.marvellisimo.services.character
 
 import android.annotation.SuppressLint
+import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Observer
+import com.androidcourse.marvellisimo.MainActivity
 import com.androidcourse.marvellisimo.dto.DataHandler
 import com.androidcourse.marvellisimo.dto.character.CharacterDataWrapper
+import com.androidcourse.marvellisimo.models.character.Character
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,7 +44,6 @@ object CharacterServiceHandler {
         ).enqueue(object : Callback<CharacterDataWrapper> {
             override fun onResponse(call: Call<CharacterDataWrapper>, response: Response<CharacterDataWrapper>) {
                 DataHandler.characters!!.postValue(response.body()!!.data.results)
-
             }
             override fun onFailure(call: Call<CharacterDataWrapper>, t: Throwable) {
                 t.message
@@ -74,6 +77,15 @@ object CharacterServiceHandler {
             comicsId = comicsId,
             apikey = API_KEY,
             ts ="1",
+            hash = HASH
+        )
+    }
+
+    fun getMoreCharacters(offset: Int) : Call<CharacterDataWrapper>{
+        return SERVICE.getMoreCharacters(
+            offset = offset,
+            apikey = API_KEY,
+            ts = "1",
             hash = HASH
         )
     }

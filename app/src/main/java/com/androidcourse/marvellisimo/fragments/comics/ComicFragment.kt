@@ -75,7 +75,7 @@ class ComicFragment : Fragment() {
                 labelForCharactersList.visibility = View.VISIBLE
             } else {
                 labelForCharactersList.visibility = View.GONE
-                comicDetailsCharacterList.adapter = CharacterListAdapter(it)
+                comicDetailsCharacterList.adapter = CharacterListAdapter(it, comicDetailsCharacterList)
             }
         })
     }

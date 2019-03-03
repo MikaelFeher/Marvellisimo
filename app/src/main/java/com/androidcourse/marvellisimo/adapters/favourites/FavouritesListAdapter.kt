@@ -1,20 +1,16 @@
 package com.androidcourse.marvellisimo.adapters.favourites
 
-import android.content.Context
-import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import android.widget.ToggleButton
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.fragments.characters.CharacterFragment
 import com.androidcourse.marvellisimo.fragments.comics.ComicFragment
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
-import com.androidcourse.marvellisimo.helpers.UndoListener
 import com.androidcourse.marvellisimo.models.Realm.Favourite
 import com.androidcourse.marvellisimo.services.FavouriteService
 import com.androidcourse.marvellisimo.services.RealmService
