@@ -23,8 +23,8 @@ object DataHandler {
     var charactersByComic: MutableLiveData<List<Character>>? = MutableLiveData()
     var comicsByCharacter: MutableLiveData<List<Comics>>? = MutableLiveData()
     lateinit var favouritesList: RealmResults<Favourite>
-    var characterTotal = 40
     var characterOffset = 20
+    var comicsOffset = 20
 
     fun initializeData() {
         CharacterServiceHandler.getAllCharacters()
@@ -32,24 +32,11 @@ object DataHandler {
     }
 
     fun getMoreCharacters() {
-
         CharacterServiceHandler.getMoreCharacters(offset = characterOffset)
             .enqueue(object : Callback<CharacterDataWrapper> {
                 override fun onResponse(call: Call<CharacterDataWrapper>, response: Response<CharacterDataWrapper>) {
-                    characterTotal = if (characterTotal == 40) response.body()!!.data.total else characterTotal
 
-                    val result = response.body()!!.data.results
-                    println("result: ${result[0].name}")
-                    var newList = ArrayList<Character>()
-                    newList.addAll(result)
-                    newList.addAll(characters.value!!)
-                    var newLIstSorted = newList.sortedBy { it.name }
-                    var filteredLIst =
-                        newLIstSorted.filterIndexed { index, it -> if (index + 1 <= newLIstSorted.size - 1) it.name != newLIstSorted[index + 1].name else false }
-
-                    characters.postValue(filteredLIst)
-
-                    println("characters: ${characters.value!!.size}")
+                    getMoreCharactersHandler(response)
                 }
 
                 override fun onFailure(call: Call<CharacterDataWrapper>, t: Throwable) {
@@ -57,6 +44,21 @@ object DataHandler {
                 }
             })
         characterOffset += 20
+    }
+
+    fun getMoreComics() {
+        ComicsServiceHandler.getMoreComics(offset = comicsOffset)
+            .enqueue(object : Callback<ComicsDataWrapper> {
+                override fun onResponse(call: Call<ComicsDataWrapper>, response: Response<ComicsDataWrapper>) {
+
+                    getMoreComicsHandler(response)
+                }
+
+                override fun onFailure(call: Call<ComicsDataWrapper>, t: Throwable) {
+                    t.message
+                }
+            })
+        comicsOffset += 20
     }
 
     fun getCharacterById(characterId: String) {
@@ -134,5 +136,29 @@ object DataHandler {
                 t.message
             }
         })
+    }
+
+    private fun getMoreCharactersHandler(response: Response<CharacterDataWrapper>) {
+        val result = response.body()!!.data.results
+        var newList = ArrayList<Character>()
+        newList.addAll(result)
+        newList.addAll(characters.value!!)
+        var newLIstSorted = newList.sortedBy { it.name }
+        var filteredLIst =
+            newLIstSorted.filterIndexed { index, it -> if (index + 1 <= newLIstSorted.size - 1) it.name != newLIstSorted[index + 1].name else false }
+
+        characters.postValue(filteredLIst)
+    }
+
+    private fun getMoreComicsHandler(response: Response<ComicsDataWrapper>) {
+        val result = response.body()!!.data.results
+        var newList = ArrayList<Comics>()
+        newList.addAll(result)
+        newList.addAll(comics!!.value!!)
+        var newLIstSorted = newList.sortedBy { it.title }
+        var filteredLIst =
+            newLIstSorted.filterIndexed { index, it -> if (index + 1 <= newLIstSorted.size - 1) it.title != newLIstSorted[index + 1].title else false }
+
+        comics!!.postValue(filteredLIst)
     }
 }

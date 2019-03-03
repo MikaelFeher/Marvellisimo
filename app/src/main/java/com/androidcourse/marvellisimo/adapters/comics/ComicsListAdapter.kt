@@ -1,5 +1,6 @@
 package com.androidcourse.marvellisimo.adapters.comics
 
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ToggleButton
 import com.androidcourse.marvellisimo.R
+import com.androidcourse.marvellisimo.dto.DataHandler
 import com.androidcourse.marvellisimo.fragments.comics.ComicFragment
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
 import com.androidcourse.marvellisimo.models.comics.Comics
@@ -16,7 +18,26 @@ import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.comics_list_item.view.*
 
-class ComicsListAdapter(private val comicsList: List<Comics>) : RecyclerView.Adapter<ComicsListAdapter.CustomViewHolder>() {
+class ComicsListAdapter(private var comicsList: List<Comics>, recyclerView: RecyclerView, isSearchResult: Boolean? = false) : RecyclerView.Adapter<ComicsListAdapter.CustomViewHolder>() {
+
+    var isLoading = false
+
+    init {
+        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val visibleItemCount = layoutManager.childCount
+                val pastVisibleItem = layoutManager.findFirstCompletelyVisibleItemPosition()
+                val total = layoutManager.itemCount
+                if (!isLoading && visibleItemCount + pastVisibleItem >= total) {
+                    isLoading = true
+                    addMore(isSearchResult)
+                    isLoading = false
+                }
+            }
+        })
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -41,9 +62,9 @@ class ComicsListAdapter(private val comicsList: List<Comics>) : RecyclerView.Ada
         holder.favouriteToggle.setOnClickListener {
 
             if (isFavourite) {
-                val tempFavourite = comic.transformToFavourite(comic.id, comic.title, comic.thumbnail.path!!, comic.thumbnail.extension!!)
+                val tempFavourite = comic.transformToFavourite(comic.id, comic.title, comic.thumbnail.path, comic.thumbnail.extension)
                 RealmService.removeFavourite(comic.id)
-                FavouriteService.removeFavouriteSnackBar(tempFavourite!!, it)
+                FavouriteService.removeFavouriteSnackBar(tempFavourite, it)
             } else {
                 var newFavourite = FavouriteService.createFavoriteComic(comic)
                 RealmService.addFavourite(newFavourite)
@@ -52,6 +73,15 @@ class ComicsListAdapter(private val comicsList: List<Comics>) : RecyclerView.Ada
 
             isFavourite = FavouriteService.checkIfFavourite(comic.id)
             FavouriteService.setFavourite(isFavourite, it)
+        }
+    }
+
+    fun addMore(isSearchResult: Boolean?) {
+        DataHandler.getMoreComics()
+        if (isSearchResult!!) {
+            comicsList = DataHandler.comicSearchResult!!.value!!
+        } else{
+            comicsList = DataHandler.comics!!.value!!
         }
     }
 

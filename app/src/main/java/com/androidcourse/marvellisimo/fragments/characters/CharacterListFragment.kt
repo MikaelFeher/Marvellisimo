@@ -25,7 +25,7 @@ class CharacterListFragment : Fragment() {
     private var viewItem: View? = null
     private var adapter: CharacterListAdapter? = null
     lateinit var progressBar: ProgressBar
-    lateinit var characterListFragment: RecyclerView
+    private lateinit var characterListFragment: RecyclerView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,7 +37,7 @@ class CharacterListFragment : Fragment() {
     }
 
     private fun populateCharactersList() {
-        DataHandler.characters!!.observe(this, Observer {
+        DataHandler.characters.observe(this, Observer {
             while (it == null) {
                 progressBar.visibility = View.VISIBLE
             }

@@ -69,4 +69,13 @@ object ComicsServiceHandler {
             hash = HASH
         )
     }
+
+    fun getMoreComics(offset: Int): Call<ComicsDataWrapper> {
+        return SERVICE.getMoreComics(
+            offset = offset,
+            apikey = API_KEY,
+            ts = "1",
+            hash = HASH
+        )
+    }
 }

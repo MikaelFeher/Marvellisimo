@@ -71,7 +71,7 @@ class SearchResultFragment : Fragment() {
                     }
                     progressBar.visibility = View.GONE
                     tvNoContent.visibility = View.GONE
-                    searchResultFragment.adapter = ComicsListAdapter(it)
+                    searchResultFragment.adapter = ComicsListAdapter(it, searchResultFragment, true)
                 }
             })
         }

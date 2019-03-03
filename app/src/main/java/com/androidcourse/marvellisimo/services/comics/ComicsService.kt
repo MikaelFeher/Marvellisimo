@@ -37,5 +37,13 @@ interface ComicsService {
         @Query("ts") ts: String,
         @Query("hash") hash: String
     ): Call<ComicsDataWrapper>
+
+    @GET("comics")
+    fun getMoreComics(
+        @Query("offset") offset: Int,
+        @Query("apikey") apikey: String,
+        @Query("ts") ts: String,
+        @Query("hash") hash: String
+    ): Call<ComicsDataWrapper>
 }
 
