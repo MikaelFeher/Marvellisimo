@@ -53,7 +53,7 @@ class FavouritesListAdapter(
             }
             RealmService.removeFavourite(favourite.id!!)
             FavouriteService.removeFavouriteSnackBar(tempFavourite, it, this)
-            this.notifyDataSetChanged()
+            notifyDataSetChanged()
         }
     }
 

@@ -31,7 +31,6 @@ class ComicsListFragment : Fragment() {
         comicsListFragment.layoutManager = LinearLayoutManager(this.context)
         progressBar = pb_fragment_comics_list_progressbar
 
-
         populateComicsList()
     }
 

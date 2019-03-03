@@ -23,8 +23,8 @@ object DataHandler {
     var charactersByComic: MutableLiveData<List<Character>>? = MutableLiveData()
     var comicsByCharacter: MutableLiveData<List<Comics>>? = MutableLiveData()
     lateinit var favouritesList: RealmResults<Favourite>
-    var characterOffset = 20
-    var comicsOffset = 20
+    private var characterOffset = 20
+    private var comicsOffset = 20
 
     fun initializeData() {
         CharacterServiceHandler.getAllCharacters()
@@ -35,7 +35,6 @@ object DataHandler {
         CharacterServiceHandler.getMoreCharacters(offset = characterOffset)
             .enqueue(object : Callback<CharacterDataWrapper> {
                 override fun onResponse(call: Call<CharacterDataWrapper>, response: Response<CharacterDataWrapper>) {
-
                     getMoreCharactersHandler(response)
                 }
 
@@ -50,7 +49,6 @@ object DataHandler {
         ComicsServiceHandler.getMoreComics(offset = comicsOffset)
             .enqueue(object : Callback<ComicsDataWrapper> {
                 override fun onResponse(call: Call<ComicsDataWrapper>, response: Response<ComicsDataWrapper>) {
-
                     getMoreComicsHandler(response)
                 }
 
@@ -114,7 +112,6 @@ object DataHandler {
 
     fun findComicByName(title: String) {
         ComicsServiceHandler.findComicByName(title).enqueue(object : Callback<ComicsDataWrapper> {
-
             override fun onResponse(call: Call<ComicsDataWrapper>, response: Response<ComicsDataWrapper>) {
                 if (response.body()!!.data.count == 0) DataHandler.comicSearchResult!!.postValue(null)
                 else DataHandler.comicSearchResult!!.postValue(response.body()!!.data.results)

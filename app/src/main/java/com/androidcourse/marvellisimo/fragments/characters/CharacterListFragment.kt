@@ -3,9 +3,7 @@ package com.androidcourse.marvellisimo.fragments.characters
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -15,9 +13,6 @@ import android.widget.ProgressBar
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.adapters.character.CharacterListAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
-import com.androidcourse.marvellisimo.models.character.Character
-import com.androidcourse.marvellisimo.services.character.CharacterService
-import com.androidcourse.marvellisimo.services.character.CharacterServiceHandler
 import kotlinx.android.synthetic.main.fragment_character_list.*
 import kotlinx.android.synthetic.main.fragment_character_list.view.*
 

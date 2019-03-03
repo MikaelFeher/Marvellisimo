@@ -95,7 +95,7 @@ class CharacterFragment : Fragment() {
                 FavouriteService.removeFavouriteSnackBar(tempFavourite!!, it)
             } else {
                 var newFavourite = FavouriteService.createFavoriteCharacter(character)
-                RealmService.addFavourite(newFavourite)
+                RealmService.addFavourite(newFavourite, this.context!!)
                 FavouriteService.addFavouriteSnackBar(newFavourite, it)
             }
 

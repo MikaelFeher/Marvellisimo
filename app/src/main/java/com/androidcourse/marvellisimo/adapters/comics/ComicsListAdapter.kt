@@ -67,7 +67,7 @@ class ComicsListAdapter(private var comicsList: List<Comics>, recyclerView: Recy
                 FavouriteService.removeFavouriteSnackBar(tempFavourite, it)
             } else {
                 var newFavourite = FavouriteService.createFavoriteComic(comic)
-                RealmService.addFavourite(newFavourite)
+                RealmService.addFavourite(newFavourite, holder.favouriteToggle.context)
                 FavouriteService.addFavouriteSnackBar(newFavourite, it)
             }
 
@@ -78,10 +78,10 @@ class ComicsListAdapter(private var comicsList: List<Comics>, recyclerView: Recy
 
     fun addMore(isSearchResult: Boolean?) {
         DataHandler.getMoreComics()
-        if (isSearchResult!!) {
-            comicsList = DataHandler.comicSearchResult!!.value!!
+        comicsList = if (isSearchResult!!) {
+            DataHandler.comicSearchResult!!.value!!
         } else{
-            comicsList = DataHandler.comics!!.value!!
+            DataHandler.comics!!.value!!
         }
     }
 

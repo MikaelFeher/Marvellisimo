@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.dto.DataHandler
 import com.androidcourse.marvellisimo.helpers.FragmentHandler
@@ -29,9 +28,10 @@ class HomeFragment : Fragment() {
             var context: FragmentHandler = it.context as FragmentHandler
 
             if (input.length() < 1) {
-                Snackbar.make(viewItem!!, "Try entering a character name or a comic title...", Snackbar.LENGTH_LONG).show()
-            }else {
-            search(input, isCharacters)
+                Snackbar.make(viewItem!!, "Try entering a character name or a comic title...", Snackbar.LENGTH_LONG)
+                    .show()
+            } else {
+                search(input, isCharacters)
 
                 if (isCharacters) {
                     context.setNextFragment(SearchResultFragment.create(true))

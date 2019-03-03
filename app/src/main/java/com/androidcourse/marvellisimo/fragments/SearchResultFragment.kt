@@ -1,19 +1,15 @@
 package com.androidcourse.marvellisimo.fragments
 
-
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.annotation.MainThread
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
-import android.text.TextUtils.isEmpty
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
-
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.adapters.character.CharacterListAdapter
 import com.androidcourse.marvellisimo.adapters.comics.ComicsListAdapter
@@ -47,34 +43,42 @@ class SearchResultFragment : Fragment() {
         tvNoContent = tv_no_content_message
 
         if (isCharacter!!) {
-            DataHandler.characterSearchResult!!.observe(this, Observer {
-                if (it == null) {
-                    progressBar.visibility = View.GONE
-                    tvNoContent.visibility = View.VISIBLE
-                } else {
-                    while (it!!.isEmpty() && it != null) {
-                        progressBar.visibility = View.VISIBLE
-                    }
-                    progressBar.visibility = View.GONE
-                    tvNoContent.visibility = View.GONE
-                    searchResultFragment.adapter = CharacterListAdapter(it, searchResultFragment, true)
-                }
-            })
+            populateCharacterSearchList()
         } else {
-            DataHandler.comicSearchResult!!.observe(this, Observer {
-                if (it == null) {
-                    progressBar.visibility = View.GONE
-                    tvNoContent.visibility = View.VISIBLE
-                } else {
-                    while (it!!.isEmpty() && it != null) {
-                        progressBar.visibility = View.VISIBLE
-                    }
-                    progressBar.visibility = View.GONE
-                    tvNoContent.visibility = View.GONE
-                    searchResultFragment.adapter = ComicsListAdapter(it, searchResultFragment, true)
-                }
-            })
+            populateComicsSearchList()
         }
+    }
+
+    private fun populateComicsSearchList() {
+        DataHandler.comicSearchResult!!.observe(this, Observer {
+            if (it == null) {
+                progressBar.visibility = View.GONE
+                tvNoContent.visibility = View.VISIBLE
+            } else {
+                while (it!!.isEmpty() && it != null) {
+                    progressBar.visibility = View.VISIBLE
+                }
+                progressBar.visibility = View.GONE
+                tvNoContent.visibility = View.GONE
+                searchResultFragment.adapter = ComicsListAdapter(it, searchResultFragment, true)
+            }
+        })
+    }
+
+    private fun populateCharacterSearchList() {
+        DataHandler.characterSearchResult!!.observe(this, Observer {
+            if (it == null) {
+                progressBar.visibility = View.GONE
+                tvNoContent.visibility = View.VISIBLE
+            } else {
+                while (it!!.isEmpty() && it != null) {
+                    progressBar.visibility = View.VISIBLE
+                }
+                progressBar.visibility = View.GONE
+                tvNoContent.visibility = View.GONE
+                searchResultFragment.adapter = CharacterListAdapter(it, searchResultFragment, true)
+            }
+        })
     }
 
     override fun onCreateView(
