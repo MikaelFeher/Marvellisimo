@@ -2,6 +2,7 @@ package com.androidcourse.marvellisimo.fragments
 
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,12 +28,16 @@ class HomeFragment : Fragment() {
             var isCharacters = rbCharacters.isChecked
             var context: FragmentHandler = it.context as FragmentHandler
 
+            if (input.length() < 1) {
+                Snackbar.make(viewItem!!, "Try entering a character name or a comic title...", Snackbar.LENGTH_LONG).show()
+            }else {
             search(input, isCharacters)
 
-            if (isCharacters) {
-                context.setNextFragment(SearchResultFragment.create(true))
-            } else {
-                context.setNextFragment(SearchResultFragment.create(false))
+                if (isCharacters) {
+                    context.setNextFragment(SearchResultFragment.create(true))
+                } else {
+                    context.setNextFragment(SearchResultFragment.create(false))
+                }
             }
         }
     }
@@ -46,7 +51,7 @@ class HomeFragment : Fragment() {
         return viewItem
     }
 
-    fun search(input: EditText, isCharacter: Boolean) {
+    private fun search(input: EditText, isCharacter: Boolean) {
         var inputValue = input.text
         if (isCharacter) {
             DataHandler.findCharacterByName(inputValue.toString())
