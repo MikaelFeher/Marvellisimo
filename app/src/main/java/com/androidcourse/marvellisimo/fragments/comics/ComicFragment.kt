@@ -44,7 +44,6 @@ class ComicFragment : Fragment() {
     private lateinit var comicDetailsCharacterList: RecyclerView
     private lateinit var favouriteToggle: ToggleButton
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -75,7 +74,7 @@ class ComicFragment : Fragment() {
                 labelForCharactersList.visibility = View.VISIBLE
             } else {
                 labelForCharactersList.visibility = View.GONE
-                comicDetailsCharacterList.adapter = CharacterListAdapter(it, comicDetailsCharacterList)
+                comicDetailsCharacterList.adapter = CharacterListAdapter(it, comicDetailsCharacterList, "comicDetailsCharacterList")
             }
         })
     }
@@ -133,5 +132,6 @@ class ComicFragment : Fragment() {
         super.onDestroy()
         DataHandler.comic = MutableLiveData()
         DataHandler.charactersByComic = MutableLiveData()
+        comicDetailsCharacterList.adapter = null
     }
 }

@@ -9,6 +9,7 @@ import retrofit2.http.Query
 interface CharacterService {
     @GET("characters")
     fun getAllCharacters(
+        @Query("limit") limit: Int = 40,
         @Query("apikey") apikey: String,
         @Query("ts") ts: String,
         @Query("hash") hash: String
@@ -40,6 +41,7 @@ interface CharacterService {
 
     @GET("characters")
     fun getMoreCharacters(
+        @Query("limit") limit: Int = 40,
         @Query("offset") offset: Int,
         @Query("apikey") apikey: String,
         @Query("ts") ts: String,

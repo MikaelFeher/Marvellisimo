@@ -33,8 +33,6 @@ class MainActivity : AppCompatActivity(), FragmentHandler {
         setFragment(homeFragment)
         RealmService.initializeRealm()
 
-        DataHandler.favouritesList = RealmService.getFavorites()
-
         // Initialize data...
         DataHandler.initializeData()
     }

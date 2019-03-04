@@ -114,5 +114,6 @@ class CharacterFragment : Fragment() {
         super.onDestroy()
         DataHandler.character = MutableLiveData()
         DataHandler.comicsByCharacter = MutableLiveData()
+        characterDetailsComicsList.adapter = null
     }
 }

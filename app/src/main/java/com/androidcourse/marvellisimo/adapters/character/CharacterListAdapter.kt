@@ -1,5 +1,6 @@
 package com.androidcourse.marvellisimo.adapters.character
 
+import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -18,10 +19,15 @@ import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.character_list_item.view.*
 
-class CharacterListAdapter(private var charactersList: List<Character>, recyclerView: RecyclerView, isSearchResult: Boolean? = false) :
+class CharacterListAdapter(
+    private var charactersList: List<Character>,
+    recyclerView: RecyclerView,
+    typeOfList: String? = "characterList"
+) :
     RecyclerView.Adapter<CharacterListAdapter.CustomViewHolder>() {
 
     var isLoading = false
+    var listType = typeOfList
 
     init {
         val layoutManager = recyclerView.layoutManager as LinearLayoutManager
@@ -31,9 +37,9 @@ class CharacterListAdapter(private var charactersList: List<Character>, recycler
                 val visibleItemCount = layoutManager.childCount
                 val pastVisibleItem = layoutManager.findFirstCompletelyVisibleItemPosition()
                 val total = layoutManager.itemCount
-                if (!isLoading && visibleItemCount + pastVisibleItem >= total) {
+                if (!isLoading && visibleItemCount + pastVisibleItem >= total / 2 + ((total / 2) / 2)) {
                     isLoading = true
-                    addMore(isSearchResult)
+                    addMore()
                     isLoading = false
                 }
             }
@@ -75,13 +81,19 @@ class CharacterListAdapter(private var charactersList: List<Character>, recycler
         }
     }
 
-    fun addMore(isSearchResult: Boolean?) {
+    fun addMore() {
         DataHandler.getMoreCharacters()
-        if (isSearchResult!!) {
-            charactersList = DataHandler.characterSearchResult!!.value!!
-        } else{
-            charactersList = DataHandler.characters.value!!
+
+        when(listType) {
+            "characterList" -> charactersList = DataHandler.characters.value!!
+            "characterSearchResult" -> charactersList = DataHandler.characterSearchResult!!.value!!
+            "comicDetailsCharacterList" -> charactersList = DataHandler.charactersByComic!!.value!!
         }
+
+        Handler().postDelayed({
+
+        notifyDataSetChanged()
+        }, 4000)
     }
 
     private fun createImage(character: Character, holder: CustomViewHolder) {

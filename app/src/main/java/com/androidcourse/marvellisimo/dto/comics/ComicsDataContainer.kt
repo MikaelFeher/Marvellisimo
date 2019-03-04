@@ -2,4 +2,4 @@ package com.androidcourse.marvellisimo.dto.comics
 
 import com.androidcourse.marvellisimo.models.comics.Comics
 
-data class ComicsDataContainer(val results: List<Comics>, val count: Int)
+data class ComicsDataContainer(val results: List<Comics>, val count: Int, val total: Int)
