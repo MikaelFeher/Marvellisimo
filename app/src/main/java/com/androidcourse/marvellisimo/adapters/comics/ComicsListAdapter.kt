@@ -1,5 +1,6 @@
 package com.androidcourse.marvellisimo.adapters.comics
 
+import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -18,9 +19,14 @@ import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.comics_list_item.view.*
 
-class ComicsListAdapter(private var comicsList: List<Comics>, recyclerView: RecyclerView, isSearchResult: Boolean? = false) : RecyclerView.Adapter<ComicsListAdapter.CustomViewHolder>() {
+class ComicsListAdapter(
+    private var comicsList: List<Comics>,
+    recyclerView: RecyclerView,
+    typeOfList: String? = "characterList"
+) : RecyclerView.Adapter<ComicsListAdapter.CustomViewHolder>() {
 
     var isLoading = false
+    var listType = typeOfList
 
     init {
         val layoutManager = recyclerView.layoutManager as LinearLayoutManager
@@ -30,9 +36,9 @@ class ComicsListAdapter(private var comicsList: List<Comics>, recyclerView: Recy
                 val visibleItemCount = layoutManager.childCount
                 val pastVisibleItem = layoutManager.findFirstCompletelyVisibleItemPosition()
                 val total = layoutManager.itemCount
-                if (!isLoading && visibleItemCount + pastVisibleItem >= total) {
+                if (!isLoading && visibleItemCount + pastVisibleItem >= total / 2 + ((total / 2) / 2)) {
                     isLoading = true
-                    addMore(isSearchResult)
+                    addMore()
                     isLoading = false
                 }
             }
@@ -46,7 +52,7 @@ class ComicsListAdapter(private var comicsList: List<Comics>, recyclerView: Recy
     }
 
     override fun getItemCount(): Int {
-       return comicsList.size
+        return comicsList.size
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
@@ -62,7 +68,8 @@ class ComicsListAdapter(private var comicsList: List<Comics>, recyclerView: Recy
         holder.favouriteToggle.setOnClickListener {
 
             if (isFavourite) {
-                val tempFavourite = comic.transformToFavourite(comic.id, comic.title, comic.thumbnail.path, comic.thumbnail.extension)
+                val tempFavourite =
+                    comic.transformToFavourite(comic.id, comic.title, comic.thumbnail.path, comic.thumbnail.extension)
                 RealmService.removeFavourite(comic.id)
                 FavouriteService.removeFavouriteSnackBar(tempFavourite, it)
             } else {
@@ -76,13 +83,17 @@ class ComicsListAdapter(private var comicsList: List<Comics>, recyclerView: Recy
         }
     }
 
-    fun addMore(isSearchResult: Boolean?) {
+    fun addMore() {
         DataHandler.getMoreComics()
-        comicsList = if (isSearchResult!!) {
-            DataHandler.comicSearchResult!!.value!!
-        } else{
-            DataHandler.comics!!.value!!
+        when(listType) {
+            "comicsList" -> comicsList = DataHandler.comics!!.value!!
+            "comicsSearchResult" -> comicsList = DataHandler.comicSearchResult!!.value!!
+            "characterDetailsComicsList" -> comicsList = DataHandler.comicsByCharacter!!.value!!
         }
+        Handler().postDelayed({
+
+            notifyDataSetChanged()
+        }, 4000)
     }
 
     private fun createImage(comic: Comics, holder: CustomViewHolder) {
@@ -102,7 +113,7 @@ class ComicsListAdapter(private var comicsList: List<Comics>, recyclerView: Recy
         init {
             view.setOnClickListener {
                 val context = it.context
-                val mActivity : FragmentHandler = context as FragmentHandler
+                val mActivity: FragmentHandler = context as FragmentHandler
                 val comicId = it.tag
 
                 mActivity.setNextFragment(ComicFragment.create(comicId.toString()))

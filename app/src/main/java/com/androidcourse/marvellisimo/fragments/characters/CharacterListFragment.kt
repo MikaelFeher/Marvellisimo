@@ -30,8 +30,6 @@ class CharacterListFragment : Fragment() {
         layoutManager = LinearLayoutManager(this.context)
         characterListFragment.layoutManager = layoutManager
         progressBar = pb_fragment_character_list_progressbar
-        loadMoreButton = btn_fragment_characters_list_load_more
-        loadMoreButton.visibility = View.GONE
 
         populateCharactersList()
 
@@ -47,7 +45,7 @@ class CharacterListFragment : Fragment() {
 
             progressBar.visibility = View.GONE
             if (adapter == null) {
-                adapter = CharacterListAdapter(it, characterListFragment, loadMoreButton)
+                adapter = CharacterListAdapter(it, characterListFragment)
                 characterListFragment.adapter = adapter
             }
             adapter!!.notifyDataSetChanged()

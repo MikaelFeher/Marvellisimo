@@ -26,7 +26,8 @@ object DataHandler {
     var comicsByCharacter: MutableLiveData<List<Comics>>? = MutableLiveData()
     private var characterOffset = 40
     private var characterTotal = 80
-    private var comicsOffset = 20
+    private var comicsTotal = 80
+    private var comicsOffset = 40
 
     fun initializeData() {
         CharacterServiceHandler.getAllCharacters()
@@ -34,7 +35,7 @@ object DataHandler {
     }
 
     fun getMoreCharacters() {
-        if(characterOffset <= characterTotal) {
+        if (characterOffset <= characterTotal) {
             characterOffset += 40
             CharacterServiceHandler.getMoreCharacters(characterOffset)
                 .enqueue(object : Callback<CharacterDataWrapper> {
@@ -53,7 +54,8 @@ object DataHandler {
     }
 
     fun getMoreComics() {
-        ComicsServiceHandler.getMoreComics(offset = comicsOffset)
+        comicsOffset += 40
+        ComicsServiceHandler.getMoreComics(comicsOffset)
             .enqueue(object : Callback<ComicsDataWrapper> {
                 override fun onResponse(call: Call<ComicsDataWrapper>, response: Response<ComicsDataWrapper>) {
                     getMoreComicsHandler(response)
@@ -63,7 +65,6 @@ object DataHandler {
                     t.message
                 }
             })
-        comicsOffset += 20
     }
 
     fun getCharacterById(characterId: String) {

@@ -44,7 +44,6 @@ class SearchResultFragment : Fragment() {
         searchResultFragment = viewItem.rv_fragment_search_result
         progressBar = pb_fragment_search_result_progressbar
         tvNoContent = tv_no_content_message
-        loadMoreButton = btn_fragment_characters_list_load_more
 
         if (isCharacter!!) {
             populateCharacterSearchList()
@@ -64,7 +63,7 @@ class SearchResultFragment : Fragment() {
                 }
                 progressBar.visibility = View.GONE
                 tvNoContent.visibility = View.GONE
-                searchResultFragment.adapter = ComicsListAdapter(it, searchResultFragment, true)
+                searchResultFragment.adapter = ComicsListAdapter(it, searchResultFragment, "characterSearchResult")
             }
         })
     }
@@ -80,7 +79,7 @@ class SearchResultFragment : Fragment() {
                 }
                 progressBar.visibility = View.GONE
                 tvNoContent.visibility = View.GONE
-                searchResultFragment.adapter = CharacterListAdapter(it, searchResultFragment, loadMoreButton)
+                searchResultFragment.adapter = CharacterListAdapter(it, searchResultFragment, "characterSearchResult")
             }
         })
     }

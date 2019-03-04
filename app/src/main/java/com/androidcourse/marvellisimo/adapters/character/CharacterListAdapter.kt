@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ToggleButton
@@ -20,10 +19,15 @@ import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.character_list_item.view.*
 
-class CharacterListAdapter(private var charactersList: List<Character>, recyclerView: RecyclerView, loadMoreButton: Button, isSearchResult: Boolean? = false) :
+class CharacterListAdapter(
+    private var charactersList: List<Character>,
+    recyclerView: RecyclerView,
+    typeOfList: String? = "characterList"
+) :
     RecyclerView.Adapter<CharacterListAdapter.CustomViewHolder>() {
 
     var isLoading = false
+    var listType = typeOfList
 
     init {
         val layoutManager = recyclerView.layoutManager as LinearLayoutManager
@@ -35,7 +39,7 @@ class CharacterListAdapter(private var charactersList: List<Character>, recycler
                 val total = layoutManager.itemCount
                 if (!isLoading && visibleItemCount + pastVisibleItem >= total / 2 + ((total / 2) / 2)) {
                     isLoading = true
-                    addMore(isSearchResult)
+                    addMore()
                     isLoading = false
                 }
             }
@@ -77,13 +81,15 @@ class CharacterListAdapter(private var charactersList: List<Character>, recycler
         }
     }
 
-    fun addMore(isSearchResult: Boolean?) {
+    fun addMore() {
         DataHandler.getMoreCharacters()
-        charactersList = if (isSearchResult!!) {
-            DataHandler.characterSearchResult!!.value!!
-        } else{
-            DataHandler.characters.value!!
+
+        when(listType) {
+            "characterList" -> charactersList = DataHandler.characters.value!!
+            "characterSearchResult" -> charactersList = DataHandler.characterSearchResult!!.value!!
+            "comicDetailsCharacterList" -> charactersList = DataHandler.charactersByComic!!.value!!
         }
+
         Handler().postDelayed({
 
         notifyDataSetChanged()
