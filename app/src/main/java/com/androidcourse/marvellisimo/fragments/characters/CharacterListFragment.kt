@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ProgressBar
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.adapters.character.CharacterListAdapter
@@ -19,17 +20,24 @@ import kotlinx.android.synthetic.main.fragment_character_list.view.*
 class CharacterListFragment : Fragment() {
     private var viewItem: View? = null
     private var adapter: CharacterListAdapter? = null
+    private var isLoading = false
     lateinit var progressBar: ProgressBar
     private lateinit var characterListFragment: RecyclerView
-
+    private lateinit var loadMoreButton: Button
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         characterListFragment = viewItem!!.rv_fragment_character_list
-        characterListFragment.layoutManager = LinearLayoutManager(this.context)
+        layoutManager = LinearLayoutManager(this.context)
+        characterListFragment.layoutManager = layoutManager
         progressBar = pb_fragment_character_list_progressbar
+        loadMoreButton = btn_fragment_characters_list_load_more
+        loadMoreButton.visibility = View.GONE
 
         populateCharactersList()
+
     }
+
+    private lateinit var layoutManager: LinearLayoutManager
 
     private fun populateCharactersList() {
         DataHandler.characters.observe(this, Observer {
@@ -39,7 +47,7 @@ class CharacterListFragment : Fragment() {
 
             progressBar.visibility = View.GONE
             if (adapter == null) {
-                adapter = CharacterListAdapter(it, characterListFragment)
+                adapter = CharacterListAdapter(it, characterListFragment, loadMoreButton)
                 characterListFragment.adapter = adapter
             }
             adapter!!.notifyDataSetChanged()

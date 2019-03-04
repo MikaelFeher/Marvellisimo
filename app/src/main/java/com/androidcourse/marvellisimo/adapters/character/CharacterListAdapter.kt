@@ -1,10 +1,12 @@
 package com.androidcourse.marvellisimo.adapters.character
 
+import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ToggleButton
@@ -18,7 +20,7 @@ import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.character_list_item.view.*
 
-class CharacterListAdapter(private var charactersList: List<Character>, recyclerView: RecyclerView, isSearchResult: Boolean? = false) :
+class CharacterListAdapter(private var charactersList: List<Character>, recyclerView: RecyclerView, loadMoreButton: Button, isSearchResult: Boolean? = false) :
     RecyclerView.Adapter<CharacterListAdapter.CustomViewHolder>() {
 
     var isLoading = false
@@ -31,7 +33,7 @@ class CharacterListAdapter(private var charactersList: List<Character>, recycler
                 val visibleItemCount = layoutManager.childCount
                 val pastVisibleItem = layoutManager.findFirstCompletelyVisibleItemPosition()
                 val total = layoutManager.itemCount
-                if (!isLoading && visibleItemCount + pastVisibleItem >= total) {
+                if (!isLoading && visibleItemCount + pastVisibleItem >= total / 2 + ((total / 2) / 2)) {
                     isLoading = true
                     addMore(isSearchResult)
                     isLoading = false
@@ -77,11 +79,15 @@ class CharacterListAdapter(private var charactersList: List<Character>, recycler
 
     fun addMore(isSearchResult: Boolean?) {
         DataHandler.getMoreCharacters()
-        if (isSearchResult!!) {
-            charactersList = DataHandler.characterSearchResult!!.value!!
+        charactersList = if (isSearchResult!!) {
+            DataHandler.characterSearchResult!!.value!!
         } else{
-            charactersList = DataHandler.characters.value!!
+            DataHandler.characters.value!!
         }
+        Handler().postDelayed({
+
+        notifyDataSetChanged()
+        }, 4000)
     }
 
     private fun createImage(character: Character, holder: CustomViewHolder) {

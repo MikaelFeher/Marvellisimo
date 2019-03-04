@@ -1,11 +1,13 @@
 package com.androidcourse.marvellisimo.dto
 
 import android.arch.lifecycle.MutableLiveData
+import com.androidcourse.marvellisimo.MainActivity
 import com.androidcourse.marvellisimo.dto.character.CharacterDataWrapper
 import com.androidcourse.marvellisimo.dto.comics.ComicsDataWrapper
 import com.androidcourse.marvellisimo.models.Realm.Favourite
 import com.androidcourse.marvellisimo.models.character.Character
 import com.androidcourse.marvellisimo.models.comics.Comics
+import com.androidcourse.marvellisimo.services.RealmService
 import com.androidcourse.marvellisimo.services.character.CharacterServiceHandler
 import com.androidcourse.marvellisimo.services.comics.ComicsServiceHandler
 import io.realm.RealmResults
@@ -22,8 +24,8 @@ object DataHandler {
     var comicSearchResult: MutableLiveData<List<Comics>>? = MutableLiveData()
     var charactersByComic: MutableLiveData<List<Character>>? = MutableLiveData()
     var comicsByCharacter: MutableLiveData<List<Comics>>? = MutableLiveData()
-    lateinit var favouritesList: RealmResults<Favourite>
-    private var characterOffset = 20
+    private var characterOffset = 40
+    private var characterTotal = 80
     private var comicsOffset = 20
 
     fun initializeData() {
@@ -32,17 +34,22 @@ object DataHandler {
     }
 
     fun getMoreCharacters() {
-        CharacterServiceHandler.getMoreCharacters(offset = characterOffset)
-            .enqueue(object : Callback<CharacterDataWrapper> {
-                override fun onResponse(call: Call<CharacterDataWrapper>, response: Response<CharacterDataWrapper>) {
-                    getMoreCharactersHandler(response)
-                }
+        if(characterOffset <= characterTotal) {
+            characterOffset += 40
+            CharacterServiceHandler.getMoreCharacters(characterOffset)
+                .enqueue(object : Callback<CharacterDataWrapper> {
+                    override fun onResponse(
+                        call: Call<CharacterDataWrapper>,
+                        response: Response<CharacterDataWrapper>
+                    ) {
+                        getMoreCharactersHandler(response)
+                    }
 
-                override fun onFailure(call: Call<CharacterDataWrapper>, t: Throwable) {
-                    t.message
-                }
-            })
-        characterOffset += 20
+                    override fun onFailure(call: Call<CharacterDataWrapper>, t: Throwable) {
+                        t.message
+                    }
+                })
+        }
     }
 
     fun getMoreComics() {
@@ -136,6 +143,7 @@ object DataHandler {
     }
 
     private fun getMoreCharactersHandler(response: Response<CharacterDataWrapper>) {
+        characterTotal = response.body()!!.data.total
         val result = response.body()!!.data.results
         var newList = ArrayList<Character>()
         newList.addAll(result)

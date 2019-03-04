@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.ToggleButton
@@ -22,6 +23,7 @@ import com.androidcourse.marvellisimo.models.comics.Image
 import com.androidcourse.marvellisimo.services.FavouriteService
 import com.androidcourse.marvellisimo.services.RealmService
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_character_list.*
 import kotlinx.android.synthetic.main.fragment_comic.*
 
 class ComicFragment : Fragment() {
@@ -43,6 +45,7 @@ class ComicFragment : Fragment() {
     private lateinit var labelForCharactersList: TextView
     private lateinit var comicDetailsCharacterList: RecyclerView
     private lateinit var favouriteToggle: ToggleButton
+    private lateinit var loadMoreCharactersButton: Button
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,6 +56,7 @@ class ComicFragment : Fragment() {
         labelForCharactersList = tv_fragment_label_for_rv_comics_details_characters_list
         comicDetailsCharacterList = rv_fragment_comics_details_characters_list
         favouriteToggle = tb_comic_fragment_favourite_toggle
+        loadMoreCharactersButton = btn_fragment_characters_list_load_more
 
         comicId?.let {
             DataHandler.getComicById(it)
@@ -75,7 +79,7 @@ class ComicFragment : Fragment() {
                 labelForCharactersList.visibility = View.VISIBLE
             } else {
                 labelForCharactersList.visibility = View.GONE
-                comicDetailsCharacterList.adapter = CharacterListAdapter(it, comicDetailsCharacterList)
+                comicDetailsCharacterList.adapter = CharacterListAdapter(it, comicDetailsCharacterList, loadMoreCharactersButton)
             }
         })
     }

@@ -8,12 +8,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.androidcourse.marvellisimo.R
 import com.androidcourse.marvellisimo.adapters.character.CharacterListAdapter
 import com.androidcourse.marvellisimo.adapters.comics.ComicsListAdapter
 import com.androidcourse.marvellisimo.dto.DataHandler
+import kotlinx.android.synthetic.main.fragment_character_list.*
 import kotlinx.android.synthetic.main.fragment_search_result.*
 import kotlinx.android.synthetic.main.fragment_search_result.view.*
 
@@ -34,6 +36,7 @@ class SearchResultFragment : Fragment() {
     private lateinit var searchResultFragment: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var tvNoContent: TextView
+    private lateinit var loadMoreButton: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,6 +44,7 @@ class SearchResultFragment : Fragment() {
         searchResultFragment = viewItem.rv_fragment_search_result
         progressBar = pb_fragment_search_result_progressbar
         tvNoContent = tv_no_content_message
+        loadMoreButton = btn_fragment_characters_list_load_more
 
         if (isCharacter!!) {
             populateCharacterSearchList()
@@ -76,7 +80,7 @@ class SearchResultFragment : Fragment() {
                 }
                 progressBar.visibility = View.GONE
                 tvNoContent.visibility = View.GONE
-                searchResultFragment.adapter = CharacterListAdapter(it, searchResultFragment, true)
+                searchResultFragment.adapter = CharacterListAdapter(it, searchResultFragment, loadMoreButton)
             }
         })
     }
